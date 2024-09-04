@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+// import './main.scss'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Media from './pages/Media/Media';
+import LogIn from './pages/LogIn';
+import Catalog from './pages/Catalog';
+import Support from './pages/Support';
+import Subscriptions from './pages/Subscriptions';
+import PageNotFound from './UI/PageNotFound/PageNotFound';
+import Layout from './pages/Layout';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route path='/' element={<Navigate to='home' />} />
+            <Route path='home' index element={<Home/>} />
+            <Route path=':mediaId' element={<Media />} />
+            <Route path='movies_&_shows' element={<Catalog />} />
+            <Route path='support' element={<Support />} />
+            <Route path='subscriptions' element={<Subscriptions />} />
+
+            <Route path='/login' element={<LogIn />} />
+            <Route path='*' element={<PageNotFound />} />
+          </Route>
+
+          
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   )
 }
 

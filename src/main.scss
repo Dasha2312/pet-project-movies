@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background: #141414;
+  margin: 0;
+  color: #fff;
+}
+img {
+  max-width: 100%;
+  width: 100%;
+}
+h1 {
+  font-size: 58px;
+}
+.btnLink {
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btnRed {
+  border-radius: 8px;
+  padding: 18px 24px;
+  color: #fff;
+  background: #e50000;
+  font-weight: 600;
+  font-size: 18px;
+  transition: 0.5s;
+  &:hover {
+    transition: 0.5s;
+    background: #ff0303;
+  }
+}
+
+.socialLink__block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  width: 46px;
+  flex: 0 0 46px;
+  height: 46px;
+  background: #1a1a1a;
+  border: 1px solid #262626;
+  transition: 0.5s;
+  &:hover {
+    border: 1px solid #fff;
+    transition: 0.5s;
+  }
+  & svg {
+    fill: #fff;
+  }
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+.socialLink__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slick-dots li {
+  border-radius: 20px;
+  width: 20px;
+  height: 5px;
+  background: #333;
+}
+
+@media(max-width: 991px) {
+  .slick-track {
+    display: flex;
+  }
+  body {
+    font-size: 14px;
+  }
+  .slick-slide {
+    width: 290px;
+  }
+}
+@media(max-width: 575px) {
+  .slick-slide {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+  }
+  
+}
+

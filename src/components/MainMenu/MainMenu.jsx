@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import style from './MainMenu.module.scss'
 
@@ -49,7 +50,9 @@ function MainMenu() {
         <Toolbar disableGutters>
 
           <Box sx={{mr: 2, display: { xs: 'none', md: 'flex', maxWidth: '165px' }}}>
-            <img src="./img/Logo.svg" />
+            <NavLink to="/">
+              <img src="./img/Logo.svg" />
+            </NavLink>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -88,7 +91,9 @@ function MainMenu() {
           </Box>
 
           <Box sx={{mr: 2, display: { xs: 'flex', md: 'none' },}}>
-            <img src="./img/Logo.svg" />
+            <NavLink to="/">
+              <img src="./img/Logo.svg" />
+            </NavLink>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
@@ -104,17 +109,16 @@ function MainMenu() {
             </Box>
           </Box>
 
-          <Box>
+          <Box sx={{display: 'flex', alignItems: 'center'}}>
             <SearchIcon />
             <NotificationsNoneIcon />
           </Box>
-          <NavLink to="/login">
-            Log in
-          </NavLink>
-          <Box sx={{ flexGrow: 0 }}>
+          
+          <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <AccountCircleIcon sx={{fontSize: '24pz', color: '#fff'}} />
               </IconButton>
             </Tooltip>
             <Menu

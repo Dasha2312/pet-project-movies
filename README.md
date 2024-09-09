@@ -18,6 +18,7 @@ This project use:
 8. Redux
 9. react-slick Slider
 10. dayjs
+11. React hook form
 
 for start:
 - npm install

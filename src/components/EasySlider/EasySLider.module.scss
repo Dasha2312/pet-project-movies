@@ -1,0 +1,55 @@
+
+
+.slide {
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 10px;
+    height: 100%;
+  }
+  &__img {
+    display: flex;
+    height: calc(100% - 80px);
+    background: #dbdbdb;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    &Empty {
+      height: auto !important;
+      object-fit: none !important;
+    }
+    img {
+      border-radius: 15px;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &__title {
+    font-size: 13px;
+    margin-bottom: 3px;
+    text-align: center;
+    font-weight: 500;
+  }
+  &__subtitle {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.customPrevArrow,
+.customNextArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #262626;
+  border-radius: 100px;
+  padding: 12px;
+  width: 30px;
+  height: 30px;
+  background: #141414;
+  margin: 0 4px;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid #fff;
+  }
+}

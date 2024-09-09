@@ -1,0 +1,40 @@
+.mediaHeader {
+  &__section {
+    background: #1a1a1a;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    padding: 40px;
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+  &__block:not(:last-child) {
+    margin-bottom: 25px;
+  }
+  &__sectionIcon {
+    width: 24px;
+    height: 25px;
+    margin-right: 5px;
+  }
+  &__tag {
+    display: inline-flex;
+    flex-wrap: wrap;
+    background: #141414;
+    border: 1px solid #262626;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+    margin: 4px;
+  }
+  &__ratingBlock {
+    border: 1px solid #262626;
+    border-radius: 8px;
+    padding: 14px;
+    background: #141414;
+    & + .mediaHeader__ratingBlock {
+      margin-top: 15px;
+    }
+  }
+}

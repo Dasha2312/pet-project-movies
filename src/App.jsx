@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Media from './pages/Media/Media';
-import LogIn from './pages/LogIn';
 import Catalog from './pages/Catalog';
 import Support from './pages/Support';
 import Subscriptions from './pages/Subscriptions';
@@ -27,7 +26,6 @@ function App() {
             <Route path='support' element={<Support />} />
             <Route path='subscriptions' element={<Subscriptions />} />
 
-            <Route path='/login' element={<LogIn />} />
             <Route path='*' element={<PageNotFound />} />
           </Route>
 

@@ -1,0 +1,13 @@
+.ReviewBlock {
+  background: #0f0f0f;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  padding: 40px;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  &__contentInner {
+    color: #999;
+    white-space: pre-line;
+  }
+}

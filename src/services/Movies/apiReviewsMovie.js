@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function ReviewsMovie(mediaId) {
+export async function ReviewsMovie(mediaId, reviewPage = 1) {
   const myToken = import.meta.env.VITE_Access_Token_Auth;
   try {
     const options = {
@@ -10,7 +10,7 @@ export async function ReviewsMovie(mediaId) {
       }
     }
 
-    const response = await axios.get(`https://api.themoviedb.org/3/movie/${mediaId}/reviews`, options)
+    const response = await axios.get(`https://api.themoviedb.org/3/movie/${mediaId}/reviews?page=${reviewPage}`, options)
 
     const reviewsMovie = response.data;
 

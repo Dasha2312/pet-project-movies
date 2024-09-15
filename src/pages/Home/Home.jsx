@@ -14,6 +14,7 @@ import FreeTrial from "../../components/FreeTrial/FreeTrial";
 
 import style from "./Home.module.scss"
 import { useEffect, useState } from "react";
+import { useContextProvider } from "../../context/useContext";
 
 function Home() {
   //Movies
@@ -26,31 +27,13 @@ function Home() {
   const {isPendingTopSeries, TopSeriesList, isErrorTopSeries, errorTopSeries} = useTopSeries();
   const {isPendingOnAirSeriesList, onAirSeries, isErrorOnAirSeriesList, errorOnAirSeriesList} = useOnAirSeries();
 
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useContextProvider();
   const [activeTab, setActiveTab] = useState('movies');
-
-  useEffect(() => {
-    function handleResize() {
-      const windowWidth = window.innerWidth;
-      if(windowWidth <= 767) {
-        setIsMobile(true)
-      }
-    }
-
-    handleResize()
-
-    document.addEventListener('resize', handleResize);
-
-    return() => {
-      document.removeEventListener('resize', handleResize)
-    }
-    
-  }, [])
 
   function handleTabClick(tab) {
     setActiveTab(tab)
   }
-
+console.log('isMobile', isMobile)
   return (
     <>
       <HomeBanner/>

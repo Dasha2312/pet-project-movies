@@ -10,15 +10,17 @@ function ContextProvider({children}) {
       const windowWidth = window.innerWidth;
       if(windowWidth <= 767) {
         setIsMobile(true)
+      } else {
+        setIsMobile(false)
       }
     }
 
     handleMobile();
 
-    document.addEventListener('resize', handleMobile)
+    window.addEventListener('resize', handleMobile)
 
     return() => {
-      document.removeEventListener('resize', handleMobile)
+      window.removeEventListener('resize', handleMobile)
     }
   }, [])
 

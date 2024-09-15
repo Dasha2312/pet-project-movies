@@ -5,7 +5,7 @@ import { useContextProvider } from "../../context/useContext";
 
 function HomeBanner() {
   const isMobile = useContextProvider();
-  console.log('isMobile', isMobile)
+
   return (
     <Box className={style.banner}>
       <Box className={style.bannerBg}>

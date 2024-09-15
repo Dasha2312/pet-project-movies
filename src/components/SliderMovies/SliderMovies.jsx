@@ -105,7 +105,7 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type}
         {isPending ? (
           <div>Loading...</div>
           ) : (
-            <Box className={`${classBlock ? classBlock : ''} slider-container`}>
+            <Box className={`${classBlock ? classBlock : ''} ${style.sliderContainer} slider-container`}>
               <Slider ref={sliderRef} {...settings}>
                 {data?.results.map(slide => <SlideItem key={slide.id} slide={slide} imagesBaseUrl={imagesBaseUrl} imagePosterSizes={imagePosterSizes} type={type} />)}
               </Slider>

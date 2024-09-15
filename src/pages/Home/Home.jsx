@@ -13,6 +13,7 @@ import HomeBanner from "../../components/HomeBanner/HomeBanner";
 import FreeTrial from "../../components/FreeTrial/FreeTrial";
 
 import style from "./Home.module.scss"
+import { useEffect, useState } from "react";
 
 function Home() {
   //Movies
@@ -25,11 +26,47 @@ function Home() {
   const {isPendingTopSeries, TopSeriesList, isErrorTopSeries, errorTopSeries} = useTopSeries();
   const {isPendingOnAirSeriesList, onAirSeries, isErrorOnAirSeriesList, errorOnAirSeriesList} = useOnAirSeries();
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeTab, setActiveTab] = useState('movies');
+
+  useEffect(() => {
+    function handleResize() {
+      const windowWidth = window.innerWidth;
+      if(windowWidth <= 767) {
+        setIsMobile(true)
+      }
+    }
+
+    handleResize()
+
+    document.addEventListener('resize', handleResize);
+
+    return() => {
+      document.removeEventListener('resize', handleResize)
+    }
+    
+  }, [])
+
+  function handleTabClick(tab) {
+    setActiveTab(tab)
+  }
+
   return (
     <>
       <HomeBanner/>
+
+      {isMobile && 
+        <Box className={style.home__tabs}>
+          <Container>
+            <Box className={style.home__tabsInner}>
+              <Box className={`${style.home__tab} ${activeTab === 'movies' ? style.active : ''}`} onClick={() => handleTabClick('movies')}>Movies</Box>
+              <Box className={`${style.home__tab} ${activeTab === 'series' ? style.active : ''}`} onClick={() => handleTabClick('series')}>Series</Box>
+            </Box>
+          </Container>
+        </Box>
+      }
       
-      <Box className={style.homeBlock}>
+      <Box className={`${style.homeBlock} ${activeTab === 'movies' ? style.active : ''}`}>
         <Container>
           <Box className={style.homeBlock__inner}>
             <Box className={style.homeBlock__header}>
@@ -51,7 +88,7 @@ function Home() {
         </Container>
       </Box>
 
-      <Box className={style.homeBlock}>
+      <Box className={`${style.homeBlock} ${activeTab === 'series' ? style.active : ''}`}>
         <Container>
           <Box className={style.homeBlock__inner}>
             <Box className={style.homeBlock__header}>

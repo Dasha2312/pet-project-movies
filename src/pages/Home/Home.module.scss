@@ -23,6 +23,32 @@
   }
 }
 
+.home {
+  &__tabs {
+    margin-bottom: 20px;
+  }
+  &__tabsInner {
+    display: flex;
+    padding: 8px;
+    background: #0f0f0f;
+    border: 1px solid #262626;
+    border-radius: 8px;
+  }
+  &__tab {
+    flex: 1;
+    border-radius: 6px;
+    padding: 12px 20px;
+    background: transparent;
+    transition: 0.5s;
+    text-align: center;
+    &.active {
+      background: #1f1f1f;
+      transition: 0.5s;
+    }
+  }
+}
+
+
 @media(max-width: 991px) {
   .homeBlock {
     padding: 30px 0;
@@ -36,9 +62,16 @@
 }
 @media(max-width: 767px) {
   .homeBlock {
+    display: none;
     &__inner {
       padding: 0;
       border: 0;
+    }
+    &__header {
+      display: none;
+    }
+    &.active {
+      display: block;
     }
   }
 }

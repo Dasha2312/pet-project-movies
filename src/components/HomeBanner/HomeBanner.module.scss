@@ -1,10 +1,18 @@
 .banner {
   padding-bottom: 100px;
+  &__title {
+    // font-size: 48px;
+    // line-height: 1.2;
+    color: #fff;
+    margin: 0 0 15px;
+    text-align: center;
+    font-size: clamp(28px, 4vw, 48px);
+  }
 }
 .bannerBg {
   position: relative;
   height: 100vh;
-  background: url('/img/bannerBg.png') no-repeat;
+  background: url('/img/homeBanner.png') no-repeat;
   background-size: cover;
   background-position: center center;
 
@@ -26,4 +34,18 @@
 .bannerContent {
   position: relative;
   z-index: 2;
+  padding-bottom: 20px;
+}
+
+.bannerIcon {
+  position: absolute;
+  top:  200px;
+  left: 50%;
+  transform: translateX(-50%);
+  // width: 400px;
+  // height: 400px;
+  width: clamp(200px, 50vw, 400px);
+  height: clamp(200px, 50vw, 400px);
+  background: url('/img/bannerIcon.svg') no-repeat;
+  background-size: cover;
 }

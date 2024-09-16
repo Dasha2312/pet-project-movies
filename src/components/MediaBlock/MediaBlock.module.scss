@@ -1,0 +1,41 @@
+.mediaItem {
+  padding: 0 10px;
+  &__inner {
+    background: #1a1a1a;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    &:hover {
+      border: 1px solid #fff;
+      transition: 0.5s;
+    }
+  }
+  &__img {
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 15px;
+    color: #999;
+    line-height: 1.3;
+  }
+  &__release,
+  &__info {
+    margin-top: 10px;
+    border: 1px solid #262626;
+    border-radius: 51px;
+    padding: 6px 15px;
+    background: #141414;
+    color: #999;
+  }
+  &__release {
+    flex-wrap: wrap;
+  }
+}

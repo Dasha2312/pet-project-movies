@@ -88,21 +88,21 @@ function Footer() {
             <Box className="socialLink__block">
               <Link to="#" className="socialLink__link">
                 <svg  viewBox="0 0 24 24" width="24">
-                  <use href="./img/icon/facebook.svg#facebook" />
+                  <use href="/img/icon/facebook.svg#facebook" />
                 </svg>
               </Link>
             </Box>
             <Box className="socialLink__block">
               <Link to="#" className="socialLink__link">
                 <svg  viewBox="0 0 24 24" width="24">
-                  <use href="./img/icon/twitter.svg#twitter" />
+                  <use href="/img/icon/twitter.svg#twitter" />
                 </svg>
               </Link>
             </Box>
             <Box className="socialLink__block">
               <Link to="#" className="socialLink__link">
                 <svg  viewBox="0 0 24 24" width="24">
-                  <use href="./img/icon/in.svg#in" />
+                  <use href="/img/icon/in.svg#in" />
                 </svg>
               </Link>
             </Box>

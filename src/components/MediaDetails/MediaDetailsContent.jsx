@@ -66,7 +66,7 @@ function MediaDetailsContent({
                   <button type="button" className={`${style.mediaHeader__playBtn} btnRed`}>
                     <i className={style.mediaHeader__playIcon}>
                       <svg width="19" viewBox="0 0 19 20">
-                        <use href="./img/icon/play-btn.svg#play-btn" />
+                        <use href="/img/icon/play-btn.svg#play-btn" />
                       </svg>
                     </i>
                     Play Now
@@ -80,7 +80,7 @@ function MediaDetailsContent({
                     <button type="button" className={style.mediaHeader__action}>
                       <i className={`${style.mediaHeader__likeIcon}`}>
                         <svg width="29" viewBox="0 0 29 28">
-                          <use href="./img/icon/like.svg#like" />
+                          <use href="/img/icon/like.svg#like" />
                         </svg>
                       </i>
                     </button>
@@ -322,7 +322,7 @@ function MediaDetailsContent({
                     <Box>
                       {!isPendingMediaInfo && <Box className={style.mediaHeader__tags}>
                         {mediaInfo.genres?.map((item) => (
-                          <Link to={`${item.id}`}
+                          <Link to={`/genre/${item.id}`}
                             key={item.id}
                             className={`${style.mediaHeader__tag} ${style.mediaHeader__genresItem}`}
                           >

@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Media from './pages/Media/Media';
-import Catalog from './pages/Catalog';
+import Catalog from './pages/Catalog/Catalog';
 import Support from './pages/Support';
 import Subscriptions from './pages/Subscriptions';
 import PageNotFound from './UI/PageNotFound/PageNotFound';
@@ -23,7 +23,8 @@ function App() {
             <Route path='/' element={<Layout/>}>
               <Route path='/' element={<Navigate to='home' />} />
               <Route path='home' index element={<Home/>} />
-              <Route path=':mediaId' element={<Media />} />
+              <Route path='media/:mediaId' element={<Media />} />
+              <Route path='genre/:genreId' element={<Catalog />} />
               <Route path='movies_&_shows' element={<Catalog />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />

@@ -33,7 +33,7 @@ function Home() {
   function handleTabClick(tab) {
     setActiveTab(tab)
   }
-console.log('isMobile', isMobile)
+
   return (
     <>
       <HomeBanner/>

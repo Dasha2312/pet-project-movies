@@ -25,7 +25,7 @@ import style from './MainMenu.module.scss'
 const pages = ['Home', 'Movies & Shows', 'Support', 'Subscriptions'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function MainMenu() {
+function MainMenu({classBlock}) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -45,13 +45,13 @@ function MainMenu() {
   };
 
   return (
-    <AppBar position="static" className={style.header__menu}>
+    <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
           <Box sx={{mr: 2, display: { xs: 'none', md: 'flex', maxWidth: '165px' }}}>
             <NavLink to="/">
-              <img src="./img/Logo.svg" />
+              <img src="/img/Logo.svg" />
             </NavLink>
           </Box>
 

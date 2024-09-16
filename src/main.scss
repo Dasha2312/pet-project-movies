@@ -110,6 +110,13 @@ h1 {
   
 }
 
+.homePage {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
 @media(max-width: 991px) {
   .slick-track {
     display: flex;

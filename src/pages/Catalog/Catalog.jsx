@@ -8,9 +8,10 @@ import useGenreMovies from '../../hooks/useGenreMovies';
 import { useEffect, useState } from 'react';
 
 import style from "./Catalog.module.scss"
-import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
+import CatalogMovies from '../../components/CatalogMovies/CatalogMovies';
+import CatalogSeries from '../../components/CatalogSeries/CatalogSeries';
 
-function Catalog() {
+function Catalog({ contentType }) {
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [catalogPage, setCatalogPage] = useState(1);
 
@@ -39,22 +40,21 @@ function Catalog() {
     <Box sx={{marginTop: '50px'}}>
       <Container>
         <Box className={style.catalog__header}>
-          <Box component='h1' className={style.catalog__title}>{genreTitle}</Box>
+          <Box component='h1' className={style.catalog__title}>{genreTitle ? genreTitle : `All ${contentType === 'movies' ? 'Movies' : 'Shows'}`}</Box>
         </Box>
         <Box sx={{marginBottom: '40px'}}>
-          <Grid container columnSpacing={2} rowSpacing={3}>
-            {
-              discoverMovie?.results.map(item => (
-                <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
-                  <MediaBlock imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} media={item} />
-                </Grid>
-              ))
+          
+            { contentType === 'movies' ? (
+                <CatalogMovies discoverMovie={discoverMovie} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage} imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} />
+              ) : (
+                <CatalogSeries />
+              )
+              
             }
             
-          </Grid>
         </Box>
 
-        <PaginationBlock result={discoverMovie} total_pages={discoverMovie?.total_pages} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage}  />
+        
         
       </Container>
     </Box>

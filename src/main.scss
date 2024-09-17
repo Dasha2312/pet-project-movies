@@ -16,6 +16,17 @@ body {
   margin: 0;
   color: #fff;
   position: relative;
+  
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+.main {
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 img {
   max-width: 100%;

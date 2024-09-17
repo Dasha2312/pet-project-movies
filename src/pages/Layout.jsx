@@ -10,7 +10,7 @@ function Layout() {
   return (
     <>
       <Header classBlock={isHomePage ? 'homePage' : ''} />
-      <main>
+      <main className="main">
         <Outlet />
       </main>
       <Footer />

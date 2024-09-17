@@ -22,7 +22,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import style from './MainMenu.module.scss'
 
 
-const pages = ['Home', 'Movies & Shows', 'Support', 'Subscriptions'];
+const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainMenu({classBlock}) {
@@ -100,7 +100,7 @@ function MainMenu({classBlock}) {
             <Box className={style.header__menuItems}>
               {pages.map((page) => (
                 <Box key={page} onClick={handleCloseNavMenu} className={style.header__menuItem}>
-                  <NavLink to={`/${page.toLowerCase().replace(/ /g, '_')}`} 
+                  <NavLink to={`/${page.toLowerCase()}`} 
                     className={({ isActive }) => `${style.header__menuLink} ${isActive ? style.active : ''}`}>
                       {page}
                   </NavLink>

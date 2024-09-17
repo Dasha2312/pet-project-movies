@@ -25,7 +25,8 @@ function App() {
               <Route path='home' index element={<Home/>} />
               <Route path='media/:mediaId' element={<Media />} />
               <Route path='genre/:genreId' element={<Catalog />} />
-              <Route path='movies_&_shows' element={<Catalog />} />
+              <Route path='movies' element={<Catalog />} />
+              <Route path='shows' element={<Catalog />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
 

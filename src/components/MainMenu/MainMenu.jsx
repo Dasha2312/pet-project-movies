@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
@@ -15,19 +15,20 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
 
-import SearchIcon from '@mui/icons-material/Search';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import style from './MainMenu.module.scss'
+import SearchBlock from '../SearchBlock/SearchBlock';
 
 
 const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainMenu({classBlock}) {
+  const [searchShow, setSearchShow] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -44,10 +45,15 @@ function MainMenu({classBlock}) {
     setAnchorElUser(null);
   };
 
+  function handleSearchClick(event) {
+    event.stopPropagation();
+    setSearchShow(true);
+  }
+
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{position: 'relative'}}>
 
           <Box sx={{mr: 2, display: { xs: 'none', md: 'flex', maxWidth: '165px' }}}>
             <NavLink to="/">
@@ -109,41 +115,44 @@ function MainMenu({classBlock}) {
             </Box>
           </Box>
 
-          <Box sx={{display: 'flex', alignItems: 'center'}}>
-            <SearchIcon />
-            <NotificationsNoneIcon />
+          <Box className={style.header__menuActions}>
+            <Box sx={{display: 'flex', alignItems: 'center'}} className={style.header__menuAction} onClick={handleSearchClick}>
+              <img src="/img/icon/search.svg" />
+            </Box>
+            
+            <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }} className={style.header__menuAction}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           </Box>
-          
-          <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                <AccountCircleIcon sx={{fontSize: '24pz', color: '#fff'}} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {
+            searchShow && <SearchBlock setSearchShow={setSearchShow} />
+          }
         </Toolbar>
       </Container>
     </AppBar>

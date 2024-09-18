@@ -32,4 +32,19 @@
       border-radius: 8px;
     }
   }
+  &__menuActions {
+    display: flex;
+    align-items: center;
+  }
+  &__menuAction {
+    cursor: pointer;
+    transition: 0.5s;
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+    &:hover {
+      opacity: 0.6;
+      transition: 0.5s;
+    }
+  }
 }

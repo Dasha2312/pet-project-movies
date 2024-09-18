@@ -1,8 +1,16 @@
 import Grid from '@mui/material/Grid2';
 import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
 import MediaBlock from '../MediaBlock/MediaBlock';
+import { Box } from '@mui/material';
 
-function CatalogMovies({discoverMovie, currentReviewPage, nextReviewPage, imagePosterSizes, imagesBaseUrl}) {
+function CatalogMedia({discoverMovie, currentReviewPage, nextReviewPage, imagePosterSizes, imagesBaseUrl}) {
+
+  if(discoverMovie?.results == '') {
+    return (
+      <Box>There are no movies that matched your query.</Box>
+    )
+  }
+
   return (
     <>
       <Grid container columnSpacing={2} rowSpacing={3}>
@@ -19,4 +27,4 @@ function CatalogMovies({discoverMovie, currentReviewPage, nextReviewPage, imageP
   );
 }
 
-export default CatalogMovies;
+export default CatalogMedia;

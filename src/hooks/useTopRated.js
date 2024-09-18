@@ -8,6 +8,5 @@ export function useTopRated() {
     refetchOnWindowFocus: false
   })
 
-  console.log('topRatedMoviesList', topRatedMoviesList)
   return {isPendingTopRated, topRatedMoviesList, isErrorTopRated, errorTopRated}
 }

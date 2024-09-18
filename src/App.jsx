@@ -27,6 +27,7 @@ function App() {
               <Route path='genre/:genreId' element={<Catalog />} />
               <Route path='movies' element={<Catalog contentType="movies" />} />
               <Route path='shows' element={<Catalog contentType="shows" />} />
+              <Route path='search' element={<Catalog contentType="search" />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
 

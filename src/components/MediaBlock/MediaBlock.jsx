@@ -11,7 +11,13 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type}) {
     <Box className={style.mediaItem}>
       <Link to={`/media/${media.id}`} className={style.mediaItem__inner}>
         <Box className={style.mediaItem__imgBlock}>
-          <img src={`${imagesBaseUrl}${imagePosterSizes}${media.poster_path}`} className={style.mediaItem__img} />
+          {media.poster_path == null ? (
+            <img src="/img/default-movie.jpg" className={style.mediaItem__img} />
+            ) : (
+              <img src={`${imagesBaseUrl}${imagePosterSizes}${media.poster_path}`} className={style.mediaItem__img} />
+            )
+          }
+          
         </Box>
         <Box className={style.mediaItem__content}>
           <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} className={style.mediaItem__info}>

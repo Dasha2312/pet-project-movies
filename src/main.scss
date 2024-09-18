@@ -3,6 +3,7 @@
 
 * {
   outline: none !important;
+  box-sizing: border-box !important;
 }
 
 body {
@@ -48,6 +49,8 @@ h1 {
   font-weight: 600;
   font-size: 18px;
   transition: 0.5s;
+  border: 0;
+  cursor: pointer;
   &:hover {
     transition: 0.5s;
     background: #ff2626;

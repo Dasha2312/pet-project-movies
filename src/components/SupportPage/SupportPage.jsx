@@ -86,18 +86,11 @@ function SupportPage() {
   }
 
   useEffect(() => {
-    let timer;
-
     if (formState.isSubmitted) {
       setIsSuccessfullySubmitted(true); 
     }
 
-    if (formStateSupport.isSubmitted) {
-      setIsSuccessfullySubmittedSupport(true);
-    }
-  
-    return () => clearTimeout(timer);
-  }, [formState.isSubmitted, formStateSupport.isSubmitted]);
+  }, [formState.isSubmitted]);
 
   function onSubmit(data) {
     console.log('data form 1: ', data);
@@ -106,6 +99,12 @@ function SupportPage() {
       setIsSuccessfullySubmitted(false);
     }, 3500);
   }
+
+  useEffect(() => {
+    if (formStateSupport.isSubmitted) {
+      setIsSuccessfullySubmittedSupport(true);
+    }
+  }, [formStateSupport.isSubmitted]);
 
   function supportOnSubmit(data) {
     console.log('support form 2: ', data);

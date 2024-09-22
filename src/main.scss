@@ -51,9 +51,13 @@ h1 {
   transition: 0.5s;
   border: 0;
   cursor: pointer;
+  white-space: nowrap;
   &:hover {
     transition: 0.5s;
     background: #ff2626;
+  }
+  &.small {
+    padding: 12px 25px;
   }
 }
 .btn-outline {
@@ -129,6 +133,46 @@ h1 {
   top: 0;
   left: 0;
   z-index: 99;
+}
+
+input,
+textarea {
+  border: 1px solid #262626;
+  border-radius: 8px;
+  padding: 20px;
+  background: #141414;
+  color: #fff;
+  width: 100%;
+  &::placeholder {
+    color: #999;
+    font-weight: 400;
+  }
+  &:focus {
+    border: 1px solid #fff;
+  }
+}
+textarea {
+  resize: none;
+  height: 160px;
+}
+.form-rrror {
+  font-size: 12px;
+  color: #e50000;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.form-file {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  width: 1;
 }
 
 @media(max-width: 991px) {

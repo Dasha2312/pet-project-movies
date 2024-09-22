@@ -1,9 +1,12 @@
+import SupportPage from "../components/SupportPage/SupportPage";
+import FreeTrial from "../components/FreeTrial/FreeTrial"
 
 function Support() {
   return (
-    <div>
-      Support
-    </div>
+    <>
+      <SupportPage />
+      <FreeTrial />
+    </>
   );
 }
 

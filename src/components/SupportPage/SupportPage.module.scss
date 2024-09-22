@@ -1,0 +1,63 @@
+.supportPage {
+  padding: 60px 0;
+  &__topHeader {
+    margin-bottom: 50px;
+  }
+  &__title {
+    margin: 0 0 15px;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    // line-height: 1.2;
+  }
+  &__subtitle {
+    color: #999;
+  }
+  &__top {
+    margin-bottom: 60px;
+  }
+  &__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 6px solid #262626;
+    border-radius: 6px;
+    background: #0f0f0f;
+  }
+  &__form {
+    background: #0f0f0f;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 50px;
+  }
+  &__formLabel {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  &__formError {
+    position: absolute;
+    bottom: -17px;
+  }
+  &__formBtn {
+    width: 100%;
+    // margin-top: 20px;
+  }
+
+  &__ask {
+    padding: 60px 0;
+  }
+  &__askInner {
+    display: flex;
+    align-items: center;
+  }
+  &__askLeft {
+    margin-right: 50px;
+  }
+  &__askTitle {
+    font-weight: 700;
+    font-size: 38px;
+    margin: 0 0 15px;
+  }
+  &__askSubtitle {
+    color: #999;
+  }
+}

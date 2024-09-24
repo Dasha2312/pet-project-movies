@@ -37,7 +37,7 @@ const dataFAQ = [
   {
     id: 6, 
     title: 'What is the StreamVibe free trial?',
-    body: "he StreamVibe free trial allows you to explore our service for six months at no cost. During this period, you'll have full access to all our features, so you can experience everything StreamVibe has to offer without any commitment. After the trial ends, you can choose to continue with a subscription or cancel if it’s not the right fit for you."
+    body: "The StreamVibe free trial allows you to explore our service for 7 days at no cost. During this period, you'll have full access to all our features, so you can experience everything StreamVibe has to offer without any commitment. After the trial ends, you can choose to continue with a subscription or cancel if it’s not the right fit for you."
   },
   {
     id: 7, 

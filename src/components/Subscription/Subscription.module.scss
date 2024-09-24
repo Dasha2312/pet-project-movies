@@ -1,0 +1,98 @@
+.subscriptionPage {
+  padding: 50px 0;
+  &__plans {
+    margin-bottom: 130px;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+  }
+  &__headerLeft {
+    margin-right: 100px;
+  }
+  &__headerTitle {
+    font-size: clamp(28px, 4vw, 48px);
+    margin: 0 0 15px;
+  }
+  &__headerSubtitle {
+    color: #999;
+  }
+
+  &__headerButtons {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    padding: 10px;
+    background: #0f0f0f;
+  }
+  &__headerButton {
+    background: transparent;
+    color: #999;
+    font-weight: 500;
+    padding: 15px 25px;
+    border: 0;
+    box-shadow: none;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 10px;
+    &:hover {
+      color: #fff;
+      transition: 0.5s;
+    }
+    &.active {
+      background: #1f1f1f;
+      color: #fff;
+    }
+  }
+
+  &__plansItem {
+    background: #1a1a1a;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 30px;
+    &__title {
+      font-weight: 700;
+      font-size: clamp(18px, 4vw, 24px);
+      margin-bottom: 15px;
+
+    }
+    &__subtitle {
+      color: #999;
+      margin-bottom: 50px;
+    }
+    &__price {
+      font-weight: 600;
+      font-size: clamp(20px, 4vw, 35px);
+      margin-bottom: 50px;
+      & span {
+        color: #999;
+        font-size: 14px;
+      }
+    }
+    &__buttons {
+      display: flex;
+    }
+    &__button {
+      flex: 50%;
+      padding-left: 0 !important;
+      padding-right: 0!important;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  
+}
+
+.subscriptionTable__label {
+  font-weight: 500;
+  color: #fff;
+  font-size: 13px;
+  background: #e50000;
+  border-radius: 2px;
+  padding: 6px 10px;
+  margin-left: 10px;
+}

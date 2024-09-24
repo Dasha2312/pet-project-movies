@@ -1,9 +1,10 @@
+import Subscription from "../components/Subscription/Subscription";
 
 function Subscriptions() {
   return (
-    <div>
-      subscriptions
-    </div>
+    <>
+      <Subscription />
+    </>
   );
 }
 

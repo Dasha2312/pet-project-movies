@@ -14,7 +14,7 @@ function FreeTrial() {
               <Box className={style.freeTrial__subtitle} sx={{color: "#999"}}>This is a clear and concise call to action that encourages users to sign up for a free trial of StreamVibe.</Box>
             </Box>
             <Box className={style.freeTrial__footer}>
-              <Link to="/free-trial" type="link" className="btnRed btnLink">Start a Free Trail</Link>
+              <Link to="/subscriptions" type="link" className="btnRed btnLink">Start a Free Trail</Link>
             </Box>
           </Box>
         </Box>

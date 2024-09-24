@@ -29,8 +29,6 @@ function MediaDetails() {
   const { SimilarMoviesPending, SimilarMoviesList, SimilarMoviesError } = useSimilarMovies(mediaId);
   const { ReviewsMovieListPending, ReviewsMovieList, ReviewsMovieError } = useReviewsMovie(mediaId, reviewPage);
 
-
-
   return (
     <>
       <MediaDetailsContent
@@ -56,7 +54,7 @@ function MediaDetails() {
         </Container>
       </Box>
 
-      <Box className="SimilarMovies" sx={{ marginTop: "30px" }}>
+      {SimilarMoviesList?.results?.length > 0 && !SimilarMoviesPending && <Box className="SimilarMovies" sx={{ marginTop: "30px" }}>
         <Container>
           <SliderMovies
             data={SimilarMoviesList}
@@ -65,7 +63,7 @@ function MediaDetails() {
             title="Similar Movies"
           />
         </Container>
-      </Box>
+      </Box>}
     </>
   );
 }

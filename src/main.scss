@@ -129,22 +129,20 @@ h1 {
   background: #333;
 }
 
-.easySlider {
-  .slick-track {
-    display: flex !important;
-    align-items: stretch;
-    .slick-slide {
-      height: auto;
-      width: 255px;
+
+.slick-track {
+  display: flex !important;
+  align-items: stretch;
+  .slick-slide {
+    height: auto;
+    width: 255px;
+    & > div {
+      height: 100%;
       & > div {
         height: 100%;
-        & > div {
-          height: 100%;
-        }
       }
     }
   }
-  
 }
 
 .homePage {

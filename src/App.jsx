@@ -4,7 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Media from './pages/Media/Media';
-import Catalog from './pages/Catalog/Catalog';
+import CatalogMovies from './pages/CatalogMovies/CatalogMovies';
+import CatalogShows from './pages/CatalogShows/CatalogShows';
+import CatalogSearch from './pages/CatalogSearch/CatalogSearch';
 import Support from './pages/Support';
 import Subscriptions from './pages/Subscriptions';
 import PageNotFound from './UI/PageNotFound/PageNotFound';
@@ -24,10 +26,10 @@ function App() {
               <Route path='/' element={<Navigate to='home' />} />
               <Route path='home' index element={<Home/>} />
               <Route path='media/:mediaId' element={<Media />} />
-              <Route path='genre/:genreId' element={<Catalog />} />
-              <Route path='movies' element={<Catalog contentType="movies" />} />
-              <Route path='shows' element={<Catalog contentType="shows" />} />
-              <Route path='search' element={<Catalog contentType="search" />} />
+              <Route path='genre/:genreId' element={<CatalogMovies />} />
+              <Route path='movies' element={<CatalogMovies />} />
+              <Route path='shows' element={<CatalogShows />} />
+              <Route path='search' element={<CatalogSearch />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
 

@@ -1,5 +1,6 @@
 .mediaItem {
   padding: 0 10px;
+  height: 100%;
   &__inner {
     background: #1a1a1a;
     border: 1px solid #262626;
@@ -7,8 +8,10 @@
     padding: 20px;
     transition: 0.5s;
     cursor: pointer;
-    display: block;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
+    height: 100%;
     &:hover {
       border: 1px solid #fff;
       transition: 0.5s;
@@ -16,7 +19,7 @@
   }
   &__img {
     border-radius: 12px;
-    margin-bottom: 15px;
+    height: 100%;
   }
   &__title {
     white-space: nowrap;

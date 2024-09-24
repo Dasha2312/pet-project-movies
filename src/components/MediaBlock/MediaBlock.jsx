@@ -10,7 +10,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type}) {
   return (
     <Box className={style.mediaItem}>
       <Link to={`/media/${media.id}`} className={style.mediaItem__inner}>
-        <Box className={style.mediaItem__imgBlock}>
+        <Box className={style.mediaItem__imgBlock} sx={{marginBottom: '15px', flex: '1'}}>
           {media.poster_path == null ? (
             <img src="/img/default-movie.jpg" className={style.mediaItem__img} />
             ) : (

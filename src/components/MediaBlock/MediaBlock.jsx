@@ -5,10 +5,32 @@ import { Link } from 'react-router-dom';
 import { changeDate } from '../../helper/helper';
 import StarIcon from '@mui/icons-material/Star';
 
-function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type}) {
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
+function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, isAuthenticated, addToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
+
+  function handleBookmarkClick(media) {
+    const newMovieLater = {
+      movieId: media.id,
+      movieName: media.original_title ?? media.original_name,
+      movieRating: media.vote_average,
+      movieImg: media.poster_path,
+      movieReleasedDate: media.release_date ?? ''
+    }
+    if(isAuthenticated) {
+      addToWatchLater(newMovieLater)
+    } else {
+      console.log('click')
+      openLogInModal()
+    }
+  }
+
   return (
     <Box className={style.mediaItem}>
+      <Box className={style.mediaItem__bookmarkBlock} onClick={() => handleBookmarkClick(media)}>
+        <BookmarkBorderIcon sx={{ fontSize: 25 }} className={`${style.mediaItem__bookmarkIcon}`} />
+      </Box>
       <Link to={`/media/${media.id}`} className={style.mediaItem__inner}>
         <Box className={style.mediaItem__imgBlock} sx={{marginBottom: '15px', flex: '1'}}>
           {media.poster_path == null ? (

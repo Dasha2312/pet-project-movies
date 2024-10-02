@@ -27,7 +27,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
                   return (
                     <>
                       <input type="text" name="firstName" placeholder="Enter First Name" {...field} className={style.supportPage__formInput} />
-                      {error && <Box className={`${style.supportPage__formError} form-rrror`}>{error.message}</Box>}
+                      {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
                     </>
                   )
                 }}
@@ -48,7 +48,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
                   return (
                     <>
                       <input type="text" name="secondName" placeholder="Enter Second Name" {...field} />
-                      {error && <Box className={`${style.supportPage__formError} form-rrror`}>{error.message}</Box>}
+                      {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
                     </>
                   )
                 }}
@@ -72,7 +72,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
                   return (
                     <>
                       <input type="text" placeholder="Enter your Email" {...field} />
-                      {error && <Box className={`${style.supportPage__formError} form-rrror`}>{error.message}</Box>}
+                      {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
                     </>
                   )
                 }}
@@ -160,7 +160,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
                         <MenuItem value="Security Concern">Security Concern</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
                       </Select>
-                      {error && <Box className={`${style.supportPage__formError} form-rrror`}>{error.message}</Box>}
+                      {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
                     </>
                   )
                 }}
@@ -228,7 +228,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
               return (
                 <>
                   <textarea type="text" placeholder="Enter your Message" {...field} />
-                  {error && <Box className={`${style.supportPage__formError} form-rrror`}>{error.message}</Box>}
+                  {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
                 </>
               )
             }}
@@ -259,7 +259,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
                     label="I agree with Terms of Use and Privacy Policy" 
                     />
                   </FormGroup>
-                  {error && <Box className={`${style.supportPage__formError} form-rrror`} sx={{bottom: '-15px'}}>{error.message}</Box>}
+                  {error && <Box className={`${style.supportPage__formError} form-error`} sx={{bottom: '-15px'}}>{error.message}</Box>}
                 </>
               )
             }}
@@ -268,7 +268,7 @@ function SupportForm({handleSubmitSupport, supportOnSubmit, Controller, controlS
         <Box className={style.supportPage__formBottom}>
           
           <Box className={style.supportPage__formSend}>
-            <button type="submit" className={`${style.supportPage__formBtn} btnRed`} disabled={agreeCheck ? false : true}>Send Message</button>
+            <button type="submit" className={`${style.supportPage__formBtn} btnRed btn-medium`} disabled={agreeCheck ? false : true}>Send Message</button>
           </Box>
         </Box>
       </form>

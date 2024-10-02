@@ -6,8 +6,17 @@ import { Box, Container } from '@mui/material';
 import useGenreMovies from '../../hooks/useGenreMovies';
 import { useEffect, useState } from 'react';
 
+import Grid from '@mui/material/Grid2';
+
+
 import style from "./CatalogMovies.module.scss"
 import CatalogMedia from '../../components/CatalogMedia/CatalogMedia';
+import Sing_In_Up from '../../components/Sing_In_Up/Sing_In_Up';
+import MediaBlock from '../../components/MediaBlock/MediaBlock';
+import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
+
+import { useContextProvider } from '../../context/useContext';
+import useAddToWatch from '../../hooks/useAddToWatch';
 
 function CatalogMovies() {
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
@@ -39,6 +48,19 @@ function CatalogMovies() {
     }
   }, [genreMoviesListPending, genreId]);
 
+  const [openLogIn, setOpenLogInModal] = useState(false);
+  const {isAuthenticated, currentUser} = useContextProvider();
+
+  const {addWatch, isPending} = useAddToWatch();
+
+  function openLogInModal() {
+    setOpenLogInModal(true)
+  }
+
+  function addToWatchLater(newMovieLater) {
+    addWatch({...newMovieLater, userId: currentUser.id})
+  }
+
   return (
     <Box sx={{marginTop: '50px'}}>
       <Container>
@@ -46,8 +68,20 @@ function CatalogMovies() {
           <Box component='h1' className={style.catalog__title}>{catalogTitle}</Box>
         </Box>
         <Box sx={{marginBottom: '40px'}}>
-          <CatalogMedia discoverMovie={discoverMovie} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage} imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} />
+          <Grid container columnSpacing={2} rowSpacing={3}>
+            {
+              discoverMovie?.results.map(item => (
+                <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
+                  <MediaBlock imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} media={item} openLogInModal={openLogInModal} isAuthenticated={isAuthenticated} addToWatchLater={addToWatchLater} />
+                </Grid>
+              ))
+            }
+          </Grid>
+          <PaginationBlock result={discoverMovie} total_pages={discoverMovie?.total_pages} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage}  />
+
         </Box>
+
+        <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
       </Container>
     </Box>
   );

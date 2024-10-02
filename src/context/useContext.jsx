@@ -1,9 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useUser from "../hooks/Auth/useUser";
 
 const siteContext = createContext(null);
 
 function ContextProvider({children}) {
   const [isMobile, setIsMobile] = useState(false);
+  const  {currentUserPending, currentUser,  isAuthenticated} = useUser();
+
+
 
   useEffect(() => {
     function handleMobile() {
@@ -25,7 +29,7 @@ function ContextProvider({children}) {
   }, [])
 
   return (
-    <siteContext.Provider value={isMobile}>
+    <siteContext.Provider value={{isMobile, isAuthenticated, currentUser}}>
       {children}
     </siteContext.Provider>
   )

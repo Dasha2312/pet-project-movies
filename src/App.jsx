@@ -12,13 +12,14 @@ import Subscriptions from './pages/Subscriptions';
 import PageNotFound from './UI/PageNotFound/PageNotFound';
 import Layout from './pages/Layout';
 import { ContextProvider } from './context/useContext';
+import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <ContextProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
           <Routes>
@@ -39,8 +40,23 @@ function App() {
             
           </Routes>
         </BrowserRouter>
-      </QueryClientProvider>
-    </ContextProvider>
+
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={24}
+          toastOptions={{
+            success: {
+              duration: 6000,
+            },
+            error: {
+              duration: 6000,
+            },
+          }}
+          
+        />
+      </ContextProvider>
+    </QueryClientProvider>
   )
 }
 

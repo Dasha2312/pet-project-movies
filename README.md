@@ -19,6 +19,8 @@ This project use:
 9. react-slick Slider
 10. dayjs
 11. React hook form
+12. supabase-js
+13. toast
 
 for start:
 - npm install

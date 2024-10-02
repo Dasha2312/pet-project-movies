@@ -19,6 +19,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import style from './MainMenu.module.scss'
 import SearchBlock from '../SearchBlock/SearchBlock';
+import SingInForm from '../SingUpForm/SingUpForm';
+import LogIn from '../LogIn/LogIn';
+import SingUpForm from '../SingUpForm/SingUpForm';
+import useUser from '../../hooks/Auth/useUser';
+import useLogOut from '../../hooks/Auth/useLogOut';
+import { useContextProvider } from '../../context/useContext';
+import Sing_In_Up from '../Sing_In_Up/Sing_In_Up';
 
 
 const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
@@ -28,6 +35,13 @@ function MainMenu({classBlock}) {
   const [searchShow, setSearchShow] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const [openLogIn, setOpenLogInModal] = useState(false)
+
+  const {isAuthenticated} = useContextProvider();
+
+
+  const {logout, isPengindLogOut} = useLogOut();
   
 
   const handleOpenNavMenu = (event) => {
@@ -49,6 +63,12 @@ function MainMenu({classBlock}) {
     event.stopPropagation();
     setSearchShow(true);
   }
+
+  function handleOpenLogInModal() {
+    setOpenLogInModal(true)
+  }
+
+
 
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
@@ -121,37 +141,54 @@ function MainMenu({classBlock}) {
             </Box>
             
             <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }} className={style.header__menuAction}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+              {
+                isAuthenticated ? (
+                  <>
+                    <Tooltip>
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: '45px' }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem>
+                        <Typography sx={{ textAlign: 'center' }}>Account</Typography>
+                      </MenuItem>
+                      <MenuItem>
+                        <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={logout}>
+                        <Typography sx={{ textAlign: 'center' }}>Log Out</Typography>
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <IconButton onClick={handleOpenLogInModal} sx={{ p: 0 }}>
+                    <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
+                  </IconButton>
+                )
+              }
+              
+              <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
+             
             </Box>
           </Box>
           {
-            searchShow && <SearchBlock setSearchShow={setSearchShow} />
+            searchShow && <SearchBlock setSearchShow={setSearchShow}  />
           }
         </Toolbar>
       </Container>

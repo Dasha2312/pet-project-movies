@@ -1,4 +1,5 @@
 .mediaItem {
+  position: relative;
   padding: 0 10px;
   height: 100%;
   &__inner {
@@ -16,6 +17,37 @@
       border: 1px solid #fff;
       transition: 0.5s;
     }
+  }
+  &__bookmarkBlock {
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    z-index: 99;
+    // border: 1px solid #e50000;
+    border: 1px solid #262626;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f0f0f;
+    &:hover {
+      border: 1px solid #e50000;
+      // background: #e50000;
+      transition: 0.5s;
+    }
+    &:hover svg {
+      color: #e50000;
+      transition: 0.5s;
+    }
+  }
+  &__bookmarkIcon {
+    color: #fff;
+    transition: 0.5s;
+    
   }
   &__img {
     border-radius: 12px;

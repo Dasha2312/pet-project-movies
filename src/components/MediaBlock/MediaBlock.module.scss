@@ -47,7 +47,12 @@
   &__bookmarkIcon {
     color: #fff;
     transition: 0.5s;
-    
+  }
+  &__bookmarkBlockActive {
+    border: 1px solid #e50000;
+    & svg {
+      color: #e50000;
+    }
   }
   &__img {
     border-radius: 12px;

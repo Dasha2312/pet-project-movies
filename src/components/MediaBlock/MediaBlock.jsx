@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from "./MediaBlock.module.scss"
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -6,9 +6,12 @@ import { changeDate } from '../../helper/helper';
 import StarIcon from '@mui/icons-material/Star';
 
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { toast } from 'react-hot-toast';
 
 function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, isAuthenticated, addToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
+
+  const [isAdded, setIsAdded] = useState(false)
 
   function handleBookmarkClick(media) {
     const newMovieLater = {
@@ -19,16 +22,20 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       movieReleasedDate: media.release_date ?? ''
     }
     if(isAuthenticated) {
-      addToWatchLater(newMovieLater)
+      try {
+        addToWatchLater(newMovieLater);
+        setIsAdded(true)
+      } catch (error) {
+        toast.error(error)
+      }
     } else {
-      console.log('click')
       openLogInModal()
     }
   }
 
   return (
     <Box className={style.mediaItem}>
-      <Box className={style.mediaItem__bookmarkBlock} onClick={() => handleBookmarkClick(media)}>
+      <Box className={`${style.mediaItem__bookmarkBlock} ${isAdded ? style.mediaItem__bookmarkBlockActive : ''}`} onClick={() => handleBookmarkClick(media)}>
         <BookmarkBorderIcon sx={{ fontSize: 25 }} className={`${style.mediaItem__bookmarkIcon}`} />
       </Box>
       <Link to={`/media/${media.id}`} className={style.mediaItem__inner}>

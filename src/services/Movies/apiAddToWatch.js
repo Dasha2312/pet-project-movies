@@ -15,7 +15,7 @@ export default async function apiAddToWatch(newMovieLater) {
     }
 
     if(existingMovies && existingMovies.length > 0) {
-      throw new Error('Этот фильм уже добавлен в ваш список Watch Later.')
+      throw new Error('This movie has already been added to your Watch Later list.')
     }
     
     const { data, error } = await supabase
@@ -29,7 +29,7 @@ export default async function apiAddToWatch(newMovieLater) {
 
     return data;
   } catch(error) {
-    console.error('Ошибка в apiAddToWatch:', error.message);
+    console.error('Error in apiAddToWatch:', error.message);
     throw error;
   }
 

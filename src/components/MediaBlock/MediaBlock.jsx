@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from "./MediaBlock.module.scss"
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -8,10 +8,16 @@ import StarIcon from '@mui/icons-material/Star';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { toast } from 'react-hot-toast';
 
-function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, isAuthenticated, addToWatchLater}) {
+function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, isAuthenticated, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
 
-  const [isAdded, setIsAdded] = useState(false)
+  const [isAdded, setIsAdded] = useState(isAddedToWatchLater)
+
+  useEffect(() => {
+    if (isAddedToWatchLater !== undefined) {
+      setIsAdded(isAddedToWatchLater);
+    }
+  }, [isAddedToWatchLater]);
 
   function handleBookmarkClick(media) {
     const newMovieLater = {
@@ -24,7 +30,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
     if(isAuthenticated) {
       try {
         addToWatchLater(newMovieLater);
-        setIsAdded(true)
+        setIsAdded(prev => !prev)
       } catch (error) {
         toast.error(error)
       }

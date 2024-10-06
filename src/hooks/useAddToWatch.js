@@ -6,8 +6,13 @@ function useAddToWatch() {
   const queryClient = useQueryClient();
   const {mutate: addWatch, isPending} = useMutation({
     mutationFn: apiAddToWatch,
-    onSuccess: () => {
-      toast.success('You add movie to list Watch Later');
+    onSuccess: (response) => {
+      // toast.success('You add movie to list Watch Later');
+      if (response.deleted) {
+        toast.success('This movie had been deleted from your Watch Later list');
+      } else {
+        toast.success('You have just added a movie to your Watch Later list');
+      }
       queryClient.invalidateQueries(["watchLater"])
     },
      onError: (error) => {

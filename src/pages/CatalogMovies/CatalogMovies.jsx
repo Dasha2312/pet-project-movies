@@ -17,6 +17,7 @@ import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
 
 import { useContextProvider } from '../../context/useContext';
 import useAddToWatch from '../../hooks/useAddToWatch';
+import useGetWatchLater from '../../hooks/useGetWatchLater';
 
 function CatalogMovies() {
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
@@ -51,6 +52,8 @@ function CatalogMovies() {
   const [openLogIn, setOpenLogInModal] = useState(false);
   const {isAuthenticated, currentUser} = useContextProvider();
 
+  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
+
   const {addWatch, isPending} = useAddToWatch();
 
   function openLogInModal() {
@@ -70,11 +73,14 @@ function CatalogMovies() {
         <Box sx={{marginBottom: '40px'}}>
           <Grid container columnSpacing={2} rowSpacing={3}>
             {
-              discoverMovie?.results.map(item => (
-                <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
-                  <MediaBlock imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} media={item} openLogInModal={openLogInModal} isAuthenticated={isAuthenticated} addToWatchLater={addToWatchLater} />
-                </Grid>
-              ))
+              discoverMovie?.results.map(item => {
+                const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId == item.id)
+                return (
+                  <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
+                    <MediaBlock imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} media={item} openLogInModal={openLogInModal} isAuthenticated={isAuthenticated} addToWatchLater={addToWatchLater} isAddedToWatchLater={isAddedToWatchLater} />
+                  </Grid>
+                )
+              })
             }
           </Grid>
           <PaginationBlock result={discoverMovie} total_pages={discoverMovie?.total_pages} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage}  />

@@ -1,5 +1,16 @@
 import supabase from "../apiSupabase";
 
+export async function apiDeleteWatchLater(movieId) {
+
+  const { error } = await supabase
+    .from('watch_later')
+    .delete()
+    .eq('movieId', movieId)
+
+    if(error) throw new Error(error.message)
+        
+}
+
 export default async function apiAddToWatch(newMovieLater) {
 
   try {
@@ -15,7 +26,10 @@ export default async function apiAddToWatch(newMovieLater) {
     }
 
     if(existingMovies && existingMovies.length > 0) {
-      throw new Error('This movie has already been added to your Watch Later list.')
+      console.log('delete movie from watch later')
+      await apiDeleteWatchLater(newMovieLater.movieId)
+      return { deleted: true };
+      // throw new Error('This movie had been deleted to your Watch Later list.')
     }
     
     const { data, error } = await supabase

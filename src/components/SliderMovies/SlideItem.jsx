@@ -5,10 +5,10 @@ import { changeDate } from "../../helper/helper";
 import { Link } from "react-router-dom";
 import MediaBlock from "../MediaBlock/MediaBlock";
 
-function SlideItem({slide, imagePosterSizes, imagesBaseUrl, type}) {
+function SlideItem({slide, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(slide.release_date);
   return (
-    <MediaBlock media={slide} imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} type={type}  />
+    <MediaBlock media={slide} imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} type={type} openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} isAddedToWatchLater={isAddedToWatchLater} />
     // <Box className={style.sliderItem}>
     //   <Link to={`/media/${slide.id}`} className={style.sliderItem__inner}>
     //     <Box className={style.sliderItem__imgBlock}>

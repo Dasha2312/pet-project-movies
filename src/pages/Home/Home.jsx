@@ -15,6 +15,11 @@ import FreeTrial from "../../components/FreeTrial/FreeTrial";
 import style from "./Home.module.scss"
 import { useEffect, useState } from "react";
 import { useContextProvider } from "../../context/useContext";
+import useMobileState from "../../hooks/useMobileState";
+import Sing_In_Up from "../../components/Sing_In_Up/Sing_In_Up";
+import useAddToWatch from "../../hooks/useAddToWatch";
+import { useAuth } from "../../store/Auth/useAuth";
+import { getAllWatchLater } from "../../services/Movies/apiAddToWatch";
 
 function Home() {
   //Movies
@@ -27,12 +32,29 @@ function Home() {
   const {isPendingTopSeries, TopSeriesList, isErrorTopSeries, errorTopSeries} = useTopSeries();
   const {isPendingOnAirSeriesList, onAirSeries, isErrorOnAirSeriesList, errorOnAirSeriesList} = useOnAirSeries();
 
-  const isMobile = useContextProvider();
+  const isMobile = useMobileState();
   const [activeTab, setActiveTab] = useState('movies');
+  const [openLogIn, setOpenLogInModal] = useState(false);
+
+  const {currentUser} = useAuth();
+
+  const {addWatch, addWatchPending} = useAddToWatch();
 
   function handleTabClick(tab) {
     setActiveTab(tab)
   }
+
+  function openLogInModal() {
+    setOpenLogInModal(true)
+  }
+
+  function addToWatchLater(newMovieLater) {
+    addWatch({...newMovieLater, userId: currentUser.id})
+  }
+
+  useEffect(() => {
+    getAllWatchLater()
+  }, [])
 
   return (
     <>
@@ -57,15 +79,15 @@ function Home() {
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" />
+              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} />
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={populatMoviesList} isPending={isPendingPopular} isError={isErrorPopular} error={errorPopular} title="Popular Movies" />
+              <SliderMovies data={populatMoviesList} isPending={isPendingPopular} isError={isErrorPopular} error={errorPopular} title="Popular Movies" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} />
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={topRatedMoviesList} isPending={isPendingTopRated} isError={isErrorTopRated} error={errorTopRated} title="Top Rated Movies" />
+              <SliderMovies data={topRatedMoviesList} isPending={isPendingTopRated} isError={isErrorTopRated} error={errorTopRated} title="Top Rated Movies" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater}s />
             </Box>
           </Box>
         </Container>
@@ -95,6 +117,8 @@ function Home() {
       <Box>
         <FreeTrial />
       </Box>
+
+      <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
     </>
   );
 }

@@ -10,14 +10,16 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import style from "./Slider.module.scss"
 import { useRef, useState } from "react";
+import useGetWatchLater from "../../hooks/useGetWatchLater";
 
-function SliderMovies({isPending, isError, data, error, classBlock, title, type}) {
+function SliderMovies({isPending, isError, data, error, classBlock, title, type, openLogInModal, addToWatchLater}) {
 
   const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
   const imagesBaseUrl = configuration?.imagesBaseUrl;
   const imagePosterSizes = configuration?.imagePosterSizes[5];
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
 
   function CustomPrevArrow({ className, onClick }) {
     return (
@@ -107,7 +109,11 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type}
           ) : (
             <Box className={`${classBlock ? classBlock : ''} ${style.sliderContainer} slider-container`}>
               <Slider ref={sliderRef} {...settings}>
-                {data?.results.map(slide => <SlideItem key={slide.id} slide={slide} imagesBaseUrl={imagesBaseUrl} imagePosterSizes={imagePosterSizes} type={type} />)}
+                {data?.results.map(slide => {
+                  const isAddedToWatchLater = allWatchLeter.some(watchLaterItem => watchLaterItem.movieId === slide.id)
+                  return (<SlideItem key={slide.id} slide={slide} imagesBaseUrl={imagesBaseUrl} imagePosterSizes={imagePosterSizes} type={type} openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} isAddedToWatchLater={isAddedToWatchLater} />)
+                  }
+                  )}
               </Slider>
             </Box>
           )

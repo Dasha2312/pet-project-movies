@@ -26,6 +26,9 @@ function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInMod
     console.log("log in ",data)
     login(data, {
       onSettled: () => {
+        reset()
+      },
+      onSuccess:() => {
         setOpenLogInModal(false)
         reset()
       }

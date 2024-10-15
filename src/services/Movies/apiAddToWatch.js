@@ -11,7 +11,7 @@ export async function apiDeleteWatchLater(movieId) {
         
 }
 
-export default async function apiAddToWatch(newMovieLater) {
+export  async function apiAddToWatch(newMovieLater) {
 
   try {
     let { data: existingMovies, error: checkError } = await supabase
@@ -47,4 +47,28 @@ export default async function apiAddToWatch(newMovieLater) {
     throw error;
   }
 
+}
+
+
+export async function getAllWatchLater() {
+
+  let { data: all_watch_later, error } = await supabase
+    .from('watch_later')
+    .select('*')
+        
+  return all_watch_later
+}
+
+export async function removeWatchLater(movieId, userId) {
+  let { data: existingMovies, error: checkError } = await supabase
+  .from('watch_later')
+  .select('*')
+  .eq('movieId', movieId)
+  .eq('userId', userId)
+
+  if(checkError) {
+    throw new Error(checkError.message)
+  }
+
+  return data
 }

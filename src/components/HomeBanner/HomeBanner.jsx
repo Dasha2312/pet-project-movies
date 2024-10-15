@@ -2,9 +2,10 @@ import { Box, Container } from "@mui/material";
 import style from "./HomeBanner.module.scss"
 import { useEffect, useState } from "react";
 import { useContextProvider } from "../../context/useContext";
+import useMobileState from "../../hooks/useMobileState";
 
 function HomeBanner() {
-  const isMobile = useContextProvider();
+  const isMobile = useMobileState();
 
   return (
     <Box className={style.banner}>

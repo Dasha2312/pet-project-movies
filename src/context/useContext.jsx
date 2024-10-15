@@ -29,7 +29,7 @@ function ContextProvider({children}) {
   }, [])
 
   return (
-    <siteContext.Provider value={{isMobile, isAuthenticated, currentUser}}>
+    <siteContext.Provider value={{isMobile}}>
       {children}
     </siteContext.Provider>
   )

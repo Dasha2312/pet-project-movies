@@ -26,22 +26,48 @@ import useUser from '../../hooks/Auth/useUser';
 import useLogOut from '../../hooks/Auth/useLogOut';
 import { useContextProvider } from '../../context/useContext';
 import Sing_In_Up from '../Sing_In_Up/Sing_In_Up';
+import { useAuth } from '../../store/Auth/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutUser } from '../../store/Auth/authSlice';
+import mobileSlice, { mobileState } from '../../store/mobileSlice';
+import useMobileState from '../../hooks/useMobileState';
+import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
 
 
 const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainMenu({classBlock}) {
+  const dispatch = useDispatch();
+
   const [searchShow, setSearchShow] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const [openLogIn, setOpenLogInModal] = useState(false)
 
-  const {isAuthenticated} = useContextProvider();
+  // const {isAuthenticated, currentUser} = useContextProvider();
+
+  const {currentUser, isAuthenticated} = useAuth();
+
+  const countWatchLater = useSelector(state => state.countWatchLater.count)
+
+  // const {logout, isPengindLogOut} = useLogOut();
 
 
-  const {logout, isPengindLogOut} = useLogOut();
+  function handleLogOut() {
+    dispatch(logOutUser());
+  }
+
+  useEffect(() => {
+    dispatch(fetchWatchLaterMovies());
+  }, [dispatch])
+
+
+  const isMobile = useMobileState();
+
+  console.log('countWatchLater', countWatchLater)
+
   
 
   const handleOpenNavMenu = (event) => {
@@ -166,12 +192,21 @@ function MainMenu({classBlock}) {
                       onClose={handleCloseUserMenu}
                     >
                       <MenuItem>
-                        <Typography sx={{ textAlign: 'center' }}>Account</Typography>
+                        <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUser?.user_metadata.userName}</Typography>
                       </MenuItem>
                       <MenuItem>
-                        <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+                        <NavLink to="/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
                       </MenuItem>
-                      <MenuItem onClick={logout}>
+                      <MenuItem>
+                        <NavLink to="/account" sx={{ textAlign: 'center' }}>Account</NavLink>
+                      </MenuItem>
+                      <MenuItem>
+                        <Typography sx={{ textAlign: 'center' }}>Subscriptions</Typography>
+                      </MenuItem>
+                      <MenuItem>
+                        <Typography sx={{ textAlign: 'center' }}>Payments</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={handleLogOut}>
                         <Typography sx={{ textAlign: 'center' }}>Log Out</Typography>
                       </MenuItem>
                     </Menu>

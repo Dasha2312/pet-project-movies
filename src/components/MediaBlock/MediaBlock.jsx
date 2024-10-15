@@ -7,11 +7,19 @@ import StarIcon from '@mui/icons-material/Star';
 
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { toast } from 'react-hot-toast';
+import { useAuth } from '../../store/Auth/useAuth';
+import { useDispatch } from 'react-redux';
+import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
 
-function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, isAuthenticated, addToWatchLater, isAddedToWatchLater}) {
+
+function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
 
-  const [isAdded, setIsAdded] = useState(isAddedToWatchLater)
+  const {isAuthenticated, loading} = useAuth();
+
+  const [isAdded, setIsAdded] = useState(isAddedToWatchLater);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAddedToWatchLater !== undefined) {
@@ -27,12 +35,23 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       movieImg: media.poster_path,
       movieReleasedDate: media.release_date ?? ''
     }
+    if (loading) {
+      return;
+    }
+
     if(isAuthenticated) {
       try {
+        
         addToWatchLater(newMovieLater);
-        setIsAdded(prev => !prev)
+        setIsAdded(prev => {
+          if(prev) {
+            dispatch(decrementCounter())
+          } else {
+            dispatch(incrementCounter())
+          }
+        })
       } catch (error) {
-        toast.error(error)
+        toast.error(error.message)
       }
     } else {
       openLogInModal()
@@ -56,7 +75,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
         </Box>
         <Box className={style.mediaItem__content}>
           <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} className={style.mediaItem__info}>
-            <Box className={style.mediaItem__title}>{media.original_title ? media.original_title : media.original_name}</Box>
+            <Box className={style.mediaItem__title}>{media.original_title || media.original_name}</Box>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
               <StarIcon sx={{marginRight: '5px', color: '#efbf04', fontSize: '14px'}} /> {media.vote_average.toFixed(1)}
             </Box>

@@ -13,13 +13,17 @@ import PageNotFound from './UI/PageNotFound/PageNotFound';
 import Layout from './pages/Layout';
 import { ContextProvider } from './context/useContext';
 import { Toaster } from 'react-hot-toast';
+import AccountPage from './pages/AccountPage/AccountPage';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import WatchLater from './pages/WatchLater/WatchLater';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ContextProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
           <Routes>
@@ -31,8 +35,10 @@ function App() {
               <Route path='movies' element={<CatalogMovies />} />
               <Route path='shows' element={<CatalogShows />} />
               <Route path='search' element={<CatalogSearch />} />
+              <Route path='watch_later' element={<WatchLater />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
+              <Route path='account' element={<AccountPage />} />
 
               <Route path='*' element={<PageNotFound />} />
             </Route>
@@ -55,8 +61,8 @@ function App() {
           }}
           
         />
-      </ContextProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </Provider>
   )
 }
 

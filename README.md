@@ -15,7 +15,7 @@ This project use:
 5. React Router
 6. MUI
 7. react-query-devtools
-8. Redux
+8. Redux-toolkit
 9. react-slick Slider
 10. dayjs
 11. React hook form

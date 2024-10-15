@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import apiAddToWatch from "../services/Movies/apiAddToWatch";
+import {apiAddToWatch} from "../services/Movies/apiAddToWatch";
 import { toast } from "react-hot-toast";
 
 function useAddToWatch() {
   const queryClient = useQueryClient();
-  const {mutate: addWatch, isPending} = useMutation({
+  const {mutate: addWatch, isPending: addWatchPending} = useMutation({
     mutationFn: apiAddToWatch,
     onSuccess: (response) => {
       // toast.success('You add movie to list Watch Later');
@@ -15,12 +15,12 @@ function useAddToWatch() {
       }
       queryClient.invalidateQueries(["watchLater"])
     },
-     onError: (error) => {
+    onError: (error) => {
       toast.error(`${error.message}`)
-     }
+    }
   })
 
-  return {addWatch, isPending}
+  return {addWatch, addWatchPending}
 }
 
 export default useAddToWatch;

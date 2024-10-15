@@ -110,7 +110,7 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type,
             <Box className={`${classBlock ? classBlock : ''} ${style.sliderContainer} slider-container`}>
               <Slider ref={sliderRef} {...settings}>
                 {data?.results.map(slide => {
-                  const isAddedToWatchLater = allWatchLeter.some(watchLaterItem => watchLaterItem.movieId === slide.id)
+                  const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId === slide.id)
                   return (<SlideItem key={slide.id} slide={slide} imagesBaseUrl={imagesBaseUrl} imagePosterSizes={imagePosterSizes} type={type} openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} isAddedToWatchLater={isAddedToWatchLater} />)
                   }
                   )}

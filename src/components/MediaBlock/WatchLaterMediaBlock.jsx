@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
 
 
-function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
+function WatchLaterMediaBlock({media, imagePosterSizes, imagesBaseUrl, type, removeFromWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.movieReleasedDate);
 
   // const {isAuthenticated, loading} = useAuth();
@@ -28,20 +28,20 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
   }, [isAddedToWatchLater]);
 
   function handleBookmarkClick(media) {
-    const newMovieLater = {
-      movieId: media.id,
-      movieName: media.original_title ?? media.original_name,
-      movieRating: media.vote_average,
-      movieImg: media.poster_path,
-      movieReleasedDate: media.release_date ?? ''
-    }
+    // const newMovieLater = {
+    //   movieId: media.id,
+    //   movieName: media.original_title ?? media.original_name,
+    //   movieRating: media.vote_average,
+    //   movieImg: media.poster_path,
+    //   movieReleasedDate: media.release_date ?? ''
+    // }
     // if (loading) {
     //   return;
     // }
 
     try {
         
-      addToWatchLater(newMovieLater);
+      removeFromWatchLater(media.movieId);
       setIsAdded(prev => {
         if(prev) {
           dispatch(decrementCounter())
@@ -53,6 +53,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       toast.error(error.message)
     }
   }
+
 
   return (
     <Box className={style.mediaItem}>
@@ -89,4 +90,4 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
   );
 }
 
-export default MediaBlock;
+export default WatchLaterMediaBlock;

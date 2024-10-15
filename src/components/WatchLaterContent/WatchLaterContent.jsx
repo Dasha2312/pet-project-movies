@@ -6,17 +6,21 @@ import Grid from '@mui/material/Grid2';
 import MediaBlock from '../MediaBlock/MediaBlock';
 import { useConfiguration } from '../../hooks/useConfiguration';
 import { Box } from '@mui/material';
+import WatchLaterMediaBlock from '../MediaBlock/WatchLaterMediaBlock';
+import useRemoveWatchLater from '../../hooks/useRemoveWatchLater';
+import { useAuth } from '../../store/Auth/useAuth';
 
 function WatchLaterContent() {
   const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
-  const {addWatch, addWatchPending} = useAddToWatch();
+  const {removeWatchLater} = useRemoveWatchLater()
 
   const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
   const imagesBaseUrl = configuration?.imagesBaseUrl;
   const imagePosterSizes = configuration?.imagePosterSizes[5];
+  const {currentUser} = useAuth()
 
-  function addToWatchLater(newMovieLater) {
-    addWatch({...newMovieLater, userId: currentUser.id})
+  function removeFromWatchLater(movieId) {
+    removeWatchLater(movieId)
   }
 
   console.log('allWatchLeter', allWatchLeter)
@@ -33,13 +37,14 @@ function WatchLaterContent() {
           <Grid container columnSpacing={2} rowSpacing={3}>
             {
               allWatchLeter?.map(item => {
-                const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId == item.id)
+                const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId == item.movieId)
                 return (
                   <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
-                    <MediaBlock imagePosterSizes={imagePosterSizes} 
+                    <WatchLaterMediaBlock 
+                      imagePosterSizes={imagePosterSizes} 
                       imagesBaseUrl={imagesBaseUrl} 
                       media={item} 
-                      addToWatchLater={addToWatchLater} 
+                      removeFromWatchLater={removeFromWatchLater} 
                       isAddedToWatchLater={isAddedToWatchLater} 
                     />
                   </Grid>

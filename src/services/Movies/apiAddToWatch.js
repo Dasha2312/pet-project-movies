@@ -59,12 +59,13 @@ export async function getAllWatchLater() {
   return all_watch_later
 }
 
-export async function removeWatchLater(movieId, userId) {
+export async function removeWatchLater(movieId, currentUserId) {
+  console.log('remove ',movieId, currentUserId)
   let { data: existingMovies, error: checkError } = await supabase
   .from('watch_later')
   .select('*')
   .eq('movieId', movieId)
-  .eq('userId', userId)
+  .eq('userId', currentUserId)
 
   if(checkError) {
     throw new Error(checkError.message)

@@ -20,12 +20,15 @@ import Sing_In_Up from "../../components/Sing_In_Up/Sing_In_Up";
 import useAddToWatch from "../../hooks/useAddToWatch";
 import { useAuth } from "../../store/Auth/useAuth";
 import { getAllWatchLater } from "../../services/Movies/apiAddToWatch";
+import useGetWatchLater from "../../hooks/useGetWatchLater";
 
 function Home() {
   //Movies
   const {isPending, isError, upcomingMovies, error} = useUpcomingMovies();
   const {isPendingPopular, populatMoviesList, isErrorPopular,  errorPopular} = usePopularMovies();
   const {isPendingTopRated, topRatedMoviesList, isErrorTopRated, errorTopRated} = useTopRated();
+
+  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
 
   //Series
   const {isPendingPopularSeries, popularSeriesList, isErrorPopularSeries, errorPopularSeries} = usePopularSeries();
@@ -79,7 +82,7 @@ function Home() {
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} />
+              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} allWatchLeter={allWatchLeter} />
             </Box>
 
             <Box className={style.homeBlock__section}>

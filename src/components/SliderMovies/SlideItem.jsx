@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import MediaBlock from "../MediaBlock/MediaBlock";
 
 function SlideItem({slide, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
-  const newFormatDate = changeDate(slide.release_date);
+  // const newFormatDate = changeDate(slide.release_date);
   return (
     <MediaBlock media={slide} imagePosterSizes={imagePosterSizes} imagesBaseUrl={imagesBaseUrl} type={type} openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} isAddedToWatchLater={isAddedToWatchLater} />
     // <Box className={style.sliderItem}>

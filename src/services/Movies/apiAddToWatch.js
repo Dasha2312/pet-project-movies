@@ -55,6 +55,8 @@ export async function getAllWatchLater() {
   let { data: all_watch_later, error } = await supabase
     .from('watch_later')
     .select('*')
+
+  if(error) throw new Error(error.message)
         
   return all_watch_later
 }
@@ -71,5 +73,5 @@ export async function removeWatchLater(movieId, currentUserId) {
     throw new Error(checkError.message)
   }
 
-  return data
+  return existingMovies
 }

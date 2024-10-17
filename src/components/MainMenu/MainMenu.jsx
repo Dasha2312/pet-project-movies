@@ -57,6 +57,7 @@ function MainMenu({classBlock}) {
 
   function handleLogOut() {
     dispatch(logOutUser());
+    setAnchorElNav(null);
   }
 
   useEffect(() => {
@@ -64,7 +65,7 @@ function MainMenu({classBlock}) {
   }, [dispatch])
 
 
-  const isMobile = useMobileState();
+  // const isMobile = useMobileState();
 
   console.log('countWatchLater', countWatchLater)
 
@@ -194,16 +195,16 @@ function MainMenu({classBlock}) {
                       <MenuItem>
                         <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUser?.user_metadata.userName}</Typography>
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
                         <NavLink to="/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
                         <NavLink to="/account" sx={{ textAlign: 'center' }}>Account</NavLink>
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
                         <Typography sx={{ textAlign: 'center' }}>Subscriptions</Typography>
                       </MenuItem>
-                      <MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
                         <Typography sx={{ textAlign: 'center' }}>Payments</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleLogOut}>

@@ -19,7 +19,7 @@ function useMobileState() {
       window.removeEventListener('resize', handleResize)
     }
 
-  }, [])
+  }, [dispatch])
 
   return isMobile;
 }

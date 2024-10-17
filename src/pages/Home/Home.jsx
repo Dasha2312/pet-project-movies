@@ -55,9 +55,9 @@ function Home() {
     addWatch({...newMovieLater, userId: currentUser.id})
   }
 
-  useEffect(() => {
-    getAllWatchLater()
-  }, [])
+  // useEffect(() => {
+  //   getAllWatchLater()
+  // }, [])
 
   return (
     <>
@@ -90,7 +90,7 @@ function Home() {
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={topRatedMoviesList} isPending={isPendingTopRated} isError={isErrorTopRated} error={errorTopRated} title="Top Rated Movies" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater}s />
+              <SliderMovies data={topRatedMoviesList} isPending={isPendingTopRated} isError={isErrorTopRated} error={errorTopRated} title="Top Rated Movies" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} />
             </Box>
           </Box>
         </Container>

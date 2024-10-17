@@ -9,9 +9,8 @@ export const fetchWatchLaterMovies = createAsyncThunk('watchLater/fetchWatchLate
 
 const initialState = {
   count: 0,
-  isAddedToWatchLater: false,
   loading: false,
-  error: null
+  error: null,
 }
 
 const watchLaterSlice = createSlice({

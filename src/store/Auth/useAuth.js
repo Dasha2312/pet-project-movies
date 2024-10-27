@@ -34,11 +34,11 @@ export function useAuth() {
   //   }
   // }, [isAuthenticated, navigate])
 
-  // useEffect(() => {
-  //   if (!isAuthenticated && currentUser === null) {
-  //     navigate('/home' ,  {replace: true}); // Перенаправление на главную
-  //   }
-  // }, [isAuthenticated, currentUser, navigate]);
+  useEffect(() => {
+    if (!isAuthenticated && currentUser === null) {
+      navigate('/home' ,  {replace: true}); // Перенаправление на главную
+    }
+  }, [isAuthenticated, currentUser, navigate]);
 
   return {currentUser, isAuthenticated, loading, fetchUser}
 }

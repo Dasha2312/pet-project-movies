@@ -13,13 +13,11 @@ import HomeBanner from "../../components/HomeBanner/HomeBanner";
 import FreeTrial from "../../components/FreeTrial/FreeTrial";
 
 import style from "./Home.module.scss"
-import { useEffect, useState } from "react";
-import { useContextProvider } from "../../context/useContext";
+import { useState } from "react";
 import useMobileState from "../../hooks/useMobileState";
 import Sing_In_Up from "../../components/Sing_In_Up/Sing_In_Up";
 import useAddToWatch from "../../hooks/useAddToWatch";
 import { useAuth } from "../../store/Auth/useAuth";
-import { getAllWatchLater } from "../../services/Movies/apiAddToWatch";
 import useGetWatchLater from "../../hooks/useGetWatchLater";
 
 function Home() {
@@ -28,7 +26,7 @@ function Home() {
   const {isPendingPopular, populatMoviesList, isErrorPopular,  errorPopular} = usePopularMovies();
   const {isPendingTopRated, topRatedMoviesList, isErrorTopRated, errorTopRated} = useTopRated();
 
-  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
+  const {allWatchLeter} = useGetWatchLater();
 
   //Series
   const {isPendingPopularSeries, popularSeriesList, isErrorPopularSeries, errorPopularSeries} = usePopularSeries();
@@ -41,7 +39,7 @@ function Home() {
 
   const {currentUser} = useAuth();
 
-  const {addWatch, addWatchPending} = useAddToWatch();
+  const {addWatch} = useAddToWatch();
 
   function handleTabClick(tab) {
     setActiveTab(tab)

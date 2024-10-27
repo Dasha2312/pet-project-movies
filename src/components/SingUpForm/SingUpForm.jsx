@@ -1,11 +1,11 @@
-import { Box, Button, Modal, TextField } from '@mui/material';
+import { Box, Modal, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useSingUp } from '../../hooks/Auth/useSingUp';
 import { LoadingButton } from '@mui/lab';
 
 function SingUpForm({openModalSingUp, closeSingUpModal, setOpenLogInModal, setOpenModalSingUp}) {
   const {singup, isPending} = useSingUp();
-  const {register, handleSubmit, formState: { errors }, reset, control} = useForm()
+  const {handleSubmit, formState: { errors }, reset, control} = useForm()
 
   function handleLogInModal() {
     setOpenLogInModal(true);

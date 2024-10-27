@@ -60,3 +60,14 @@ export async function getCurrentUser() {
   return data?.user;
 } 
 
+export async function apiUpdateUser({fullName, email, password}) {
+  const { data: updateUserData, error } = await supabase.auth.updateUser({
+    email,
+    password,
+    data: { fullName }
+  })
+
+  if (error) throw new Error(error.message);
+
+  return updateUserData;
+}

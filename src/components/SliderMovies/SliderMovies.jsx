@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Container, duration } from "@mui/material";
+import { Box } from "@mui/material";
 import SlideItem from "./SlideItem";
 import { useConfiguration } from "../../hooks/useConfiguration";
 // import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
@@ -10,17 +10,16 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import style from "./Slider.module.scss"
 import { useRef, useState } from "react";
-import useGetWatchLater from "../../hooks/useGetWatchLater";
 
 function SliderMovies({isPending, isError, data, error, classBlock, title, type, openLogInModal, addToWatchLater, allWatchLeter}) {
 
-  const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
+  const {configuration} = useConfiguration();
   const imagesBaseUrl = configuration?.imagesBaseUrl;
   const imagePosterSizes = configuration?.imagePosterSizes[5];
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  function CustomPrevArrow({ className, onClick }) {
+  function CustomPrevArrow({ onClick }) {
     return (
       <div className={style.customPrevArrow} onClick={onClick}>
         <ArrowBackIcon />
@@ -28,7 +27,7 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type,
     );
   };
 
-  function CustomNextArrow({ className, onClick }) {
+  function CustomNextArrow({ onClick }) {
     return (
       <div className={style.customNextArrow} onClick={onClick}>
         <ArrowForwardIcon />
@@ -96,7 +95,7 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type,
                 <span
                   key={index}
                   className={`${style.sliderBlock__dot} ${index === currentSlide ? style.sliderBlock__dotActive : ""}`}
-                  onClick={() => sliderRef.current.slickGoTo(index * slidesToScroll)}
+                  onClick={() => sliderRef.current.slickGoTo(index * settings.slidesToScroll)}
                 >
                 </span>
               ))}

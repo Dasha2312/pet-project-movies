@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from "./MediaBlock.module.scss"
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';

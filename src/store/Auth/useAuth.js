@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useError, userLoaded, userLoading } from "./authSlice";
 import { getCurrentUser } from "../../services/Auth/apiAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function useAuth() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {currentUser, isAuthenticated, loading} = useSelector(state => state.auth);
 
@@ -21,6 +24,21 @@ export function useAuth() {
       dispatch(useError(error.message))
     }
   }
+
+  console.log('isAuthenticated', isAuthenticated)
+  console.log('currentUser', currentUser)
+
+  // useEffect(() => {
+  //   if(!isAuthenticated) {
+  //     navigate('/',  {replace: true})
+  //   }
+  // }, [isAuthenticated, navigate])
+
+  // useEffect(() => {
+  //   if (!isAuthenticated && currentUser === null) {
+  //     navigate('/home' ,  {replace: true}); // Перенаправление на главную
+  //   }
+  // }, [isAuthenticated, currentUser, navigate]);
 
   return {currentUser, isAuthenticated, loading, fetchUser}
 }

@@ -1,8 +1,11 @@
-import { Box, Container } from '@mui/material';
+import { Box, Button, Container, Modal } from '@mui/material';
 import style from './Subscription.module.scss'
 import Grid from '@mui/material/Grid2';
 import { useState } from 'react';
 import SubscriptionTable from './subscriptionTable';
+import { useForm } from 'react-hook-form';
+import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
+import { useAuth } from '../../store/Auth/useAuth';
 
 function Subscription() {
 
@@ -30,10 +33,45 @@ function Subscription() {
     }
   ]
 
+  const {tarifPlan} = useTarifPlan();
+  const {currentUser} = useAuth()
+
   const [typePlan, setTypePlans] = useState('monthly');
+  const [showPayModal, setShowPayModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState('');
+  const {handleSubmit, reset} = useForm();
 
   function handlePlanType(type) {
     setTypePlans(type)
+  }
+
+  function openPayModal(selectPlan) {
+    setSelectedPlan(selectPlan)
+    setShowPayModal(true)
+  }
+
+  function handleCloseModal() {
+    setShowPayModal(false)
+  }
+
+  function onSubmit() {
+    const userPlan = {
+      tariffPlanTitle: selectedPlan.title,
+      tariffPlanPrice: typePlan === "monthly" ? selectedPlan.priceMonth : selectedPlan.priceYear,
+      tariffPlanType: typePlan,
+      userId: currentUser.id,
+      tariffPlanId: selectedPlan.id
+    }
+    
+    tarifPlan(userPlan, {
+      onSettled: () => {
+        reset()
+      },
+      onSuccess: () => {
+        setShowPayModal(false)
+        reset()
+      }
+    })
   }
 
   return (
@@ -42,7 +80,7 @@ function Subscription() {
         <Container>
           <Box className={style.subscriptionPage__header}>
             <Box className={style.subscriptionPage__headerLeft}>
-              <Box component="h1" className={style.subscriptionPage__headerTitle}>Choose the plan that's right for you</Box>
+              <Box component="h1" className={style.subscriptionPage__headerTitle}>Choose the plan that is right for you</Box>
               <Box className={style.subscriptionPage__headerSubtitle}>
                 Join StreamVibe and select from our flexible subscription options tailored to suit your viewing preferences. Get ready for non-stop entertainment!
               </Box>
@@ -69,8 +107,8 @@ function Subscription() {
                       <span>/month</span>
                     </Box>
                     <Box className={style.subscriptionPage__plansItem__buttons}>
-                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`}>Start Free Trial</button>
-                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`}>Choose Plan</button>
+                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan)}>Start Free Trial</button>
+                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan)}>Choose Plan</button>
                     </Box>
                   </Box>
                 </Grid>
@@ -86,7 +124,7 @@ function Subscription() {
             <Box className={style.subscriptionPage__headerLeft}>
               <Box component="h1" className={style.subscriptionPage__headerTitle}>Compare our plans and find the right one for you</Box>
               <Box className={style.subscriptionPage__headerSubtitle}>
-                StreamVibe offers three different plans to fit your needs: Basic, Standard, and Premium. Compare the features of each plan and choose the one that's right for you.
+                StreamVibe offers three different plans to fit your needs: Basic, Standard, and Premium. Compare the features of each plan and choose the one that is right for you.
               </Box>
             </Box>
           </Box>
@@ -96,6 +134,24 @@ function Subscription() {
           </Box>
         </Container>
       </Box>
+
+      <Modal
+        open={showPayModal}
+        onClose={handleCloseModal}
+        sx={{
+          ".MuiBackdrop-root": {
+            backgroundColor: "rgba(0, 0, 0, 0.85)"
+          }
+        }}
+      >
+        <Box className="modal-block" component="form" onSubmit={handleSubmit(onSubmit)}>
+          <Box component="h2" sx={{textAlign: "center", mb: '20px'}}>Payment</Box>
+          <Box sx={{mb: "20px", fontSize: "18px", fontWeight: '500'}}><Box sx={{fontWeight: 'bold', display: "inline-block"}}>{selectedPlan.title}</Box> - {typePlan == 'monthly' ? `${selectedPlan.priceMonth}/month` : `${selectedPlan.priceYear}/year`}</Box>
+          <Box sx={{mt: '20px'}}>
+            <Button fullWidth type="submit" className="btnRed">Buy</Button>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 }

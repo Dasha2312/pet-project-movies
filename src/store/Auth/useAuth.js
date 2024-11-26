@@ -28,17 +28,19 @@ export function useAuth() {
   console.log('isAuthenticated', isAuthenticated)
   console.log('currentUser', currentUser)
 
+  // TODO when user did LOG OUT you should send him to home page
+
   // useEffect(() => {
   //   if(!isAuthenticated) {
   //     navigate('/',  {replace: true})
   //   }
   // }, [isAuthenticated, navigate])
 
-  useEffect(() => {
-    if (!isAuthenticated && currentUser === null) {
-      navigate('/home' ,  {replace: true}); // Перенаправление на главную
-    }
-  }, [isAuthenticated, currentUser, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated && currentUser === null) {
+  //     navigate('/home' ,  {replace: true}); // Перенаправление на главную
+  //   }
+  // }, [isAuthenticated, currentUser, navigate]);
 
   return {currentUser, isAuthenticated, loading, fetchUser}
 }

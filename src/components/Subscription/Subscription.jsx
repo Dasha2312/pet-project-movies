@@ -6,8 +6,14 @@ import SubscriptionTable from './subscriptionTable';
 import { useForm } from 'react-hook-form';
 import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
 import { useAuth } from '../../store/Auth/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedTariff } from '../../store/tariffSlice';
+import useInitializeTariff from '../../hooks/TarifPlan/useInitializeTariff';
 
 function Subscription() {
+  const selectedTariff = useSelector((state) => state.tariff.selectedTariff);
+
+  console.log('selectedTariff', selectedTariff);
 
   const plans = [
     {
@@ -35,6 +41,7 @@ function Subscription() {
 
   const {tarifPlan} = useTarifPlan();
   const {currentUser} = useAuth()
+  const dispatch = useDispatch();
 
   const [typePlan, setTypePlans] = useState('monthly');
   const [showPayModal, setShowPayModal] = useState(false);
@@ -65,14 +72,26 @@ function Subscription() {
     
     tarifPlan(userPlan, {
       onSettled: () => {
-        reset()
+        reset();
       },
       onSuccess: () => {
+        dispatch(setSelectedTariff(userPlan));
         setShowPayModal(false)
         reset()
       }
     })
   }
+
+  function normalizeTariff(tariff) {
+    if (Array.isArray(tariff)) {
+      return tariff[0] || null;
+    }
+    return tariff || null;
+  }
+  
+  useInitializeTariff(currentUser?.id);
+  const normalizedTariff = normalizeTariff(selectedTariff);
+
 
   return (
     <Box className={style.subscriptionPage}>
@@ -107,8 +126,18 @@ function Subscription() {
                       <span>/month</span>
                     </Box>
                     <Box className={style.subscriptionPage__plansItem__buttons}>
-                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan)}>Start Free Trial</button>
-                      <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan)}>Choose Plan</button>
+                      {normalizedTariff?.tariffPlanId == plan.id && normalizedTariff?.tariffPlanType ==  typePlan ? (
+                        <>
+                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`}>Active Plan</button>
+                        </>
+                      ) : (
+                        <>
+                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan)}>Start Free Trial</button>
+                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan)}>Choose Plan</button>
+                        </>
+                      )
+
+                      }
                     </Box>
                   </Box>
                 </Grid>

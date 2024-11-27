@@ -56,9 +56,6 @@ h1 {
     transition: 0.5s;
     background: #ff2626 !important;
   }
-  &.small {
-    padding: 12px 25px;
-  }
 }
 .btn-outline {
   margin-top: 10px;
@@ -115,7 +112,7 @@ h1 {
 }
 .small {
   font-size: 14px;
-  padding: 15px 25px;
+  padding: 15px!important;
 }
 
 .socialLink__block {

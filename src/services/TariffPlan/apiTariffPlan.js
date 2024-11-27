@@ -7,6 +7,7 @@ export async function apiChooseTariffPlan(userPlan) {
       .from('user_tariff_plan')
       .select('*')
       .eq('userId', userPlan.userId)
+      
 
     if(existTariffPlanError) {
       throw new Error(existTariffPlanError.message)
@@ -22,6 +23,7 @@ export async function apiChooseTariffPlan(userPlan) {
           tariffPlanType: userPlan.tariffPlanType,
         })
         .eq('userId', userPlan.userId)
+        .select('*');
 
       if (updateError) throw new Error(updateError.message);
 
@@ -39,6 +41,7 @@ export async function apiChooseTariffPlan(userPlan) {
 
           },
         ])
+        .select('*')
 
       if (createError) throw new Error(createError.message);
 

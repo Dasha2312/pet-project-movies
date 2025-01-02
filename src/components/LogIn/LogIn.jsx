@@ -8,8 +8,11 @@ import SendIcon from '@mui/icons-material/Send';
 import SaveIcon from '@mui/icons-material/Save';
 
 
+
 function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInModal}) {
+  
   const {login, isPending} = useLogIn();
+
   const {reset, handleSubmit, formState: {errors}, control} = useForm({
     defaultValues: {
       email: '',
@@ -33,6 +36,7 @@ function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInMod
         reset()
       }
     })
+    
   }
 
   return (

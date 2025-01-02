@@ -1,20 +1,19 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "../../services/Auth/apiAuth";
 
 function useUser() {
-  const queryClient = useQueryClient();
-
-  const {isPending: currentUserPending, data: currentUser} = useQuery({
+  const {isPending: currentUserPending, data: currentUserData} = useQuery({
     queryKey: ["user"],
     queryFn: () => getCurrentUser(),
     staleTime: 60 * 60 * 1000,
     cacheTime: 24 * 60 * 60 * 1000, 
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    retry: false,
   })
 
-  const isAuthenticated = currentUser !== null;
+  const isAuthenticated = !!currentUserData;
 
-  return {currentUserPending, currentUser, isAuthenticated}
+  return {currentUserPending, currentUserData, isAuthenticated}
 }
 
 export default useUser;

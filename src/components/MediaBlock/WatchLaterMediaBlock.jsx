@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from "./MediaBlock.module.scss"
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -7,15 +7,13 @@ import StarIcon from '@mui/icons-material/Star';
 
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '../../store/Auth/useAuth';
+
 import { useDispatch } from 'react-redux';
 import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
 
 
 function WatchLaterMediaBlock({media, imagePosterSizes, imagesBaseUrl, type, removeFromWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.movieReleasedDate);
-
-  // const {isAuthenticated, loading} = useAuth();
 
   const [isAdded, setIsAdded] = useState(isAddedToWatchLater);
 

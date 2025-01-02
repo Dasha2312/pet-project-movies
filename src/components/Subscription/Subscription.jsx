@@ -5,13 +5,15 @@ import { useState } from 'react';
 import SubscriptionTable from './subscriptionTable';
 import { useForm } from 'react-hook-form';
 import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
-import { useAuth } from '../../store/Auth/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedTariff } from '../../store/tariffSlice';
 import useInitializeTariff from '../../hooks/TarifPlan/useInitializeTariff';
+import useUser from '../../hooks/Auth/useUser';
 
 function Subscription() {
   const selectedTariff = useSelector((state) => state.tariff.selectedTariff);
+
+  const {currentUserData} = useUser();
 
   console.log('selectedTariff', selectedTariff);
 
@@ -40,7 +42,7 @@ function Subscription() {
   ]
 
   const {tarifPlan} = useTarifPlan();
-  const {currentUser} = useAuth()
+  
   const dispatch = useDispatch();
 
   const [typePlan, setTypePlans] = useState('monthly');
@@ -52,9 +54,11 @@ function Subscription() {
     setTypePlans(type)
   }
 
-  function openPayModal(selectPlan) {
-    setSelectedPlan(selectPlan)
+  function openPayModal(selectPlan, method) {
+    
+    setSelectedPlan({...selectPlan, method})
     setShowPayModal(true)
+    console.log('selectedPlan', selectedPlan)
   }
 
   function handleCloseModal() {
@@ -66,8 +70,9 @@ function Subscription() {
       tariffPlanTitle: selectedPlan.title,
       tariffPlanPrice: typePlan === "monthly" ? selectedPlan.priceMonth : selectedPlan.priceYear,
       tariffPlanType: typePlan,
-      userId: currentUser.id,
-      tariffPlanId: selectedPlan.id
+      userId: currentUserData.id,
+      tariffPlanId: selectedPlan.id,
+      tariffPlanMethod: selectedPlan.method
     }
     
     tarifPlan(userPlan, {
@@ -89,7 +94,7 @@ function Subscription() {
     return tariff || null;
   }
   
-  useInitializeTariff(currentUser?.id);
+  useInitializeTariff(currentUserData?.id);
   const normalizedTariff = normalizeTariff(selectedTariff);
 
 
@@ -132,8 +137,8 @@ function Subscription() {
                         </>
                       ) : (
                         <>
-                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan)}>Start Free Trial</button>
-                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan)}>Choose Plan</button>
+                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan, 'freeTrial')}>Start Free Trial</button>
+                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan, 'buy')}>Choose Plan</button>
                         </>
                       )
 

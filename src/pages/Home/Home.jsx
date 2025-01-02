@@ -17,8 +17,8 @@ import { useState } from "react";
 import useMobileState from "../../hooks/useMobileState";
 import Sing_In_Up from "../../components/Sing_In_Up/Sing_In_Up";
 import useAddToWatch from "../../hooks/useAddToWatch";
-import { useAuth } from "../../store/Auth/useAuth";
 import useGetWatchLater from "../../hooks/useGetWatchLater";
+import useUser from "../../hooks/Auth/useUser";
 
 function Home() {
   //Movies
@@ -37,7 +37,7 @@ function Home() {
   const [activeTab, setActiveTab] = useState('movies');
   const [openLogIn, setOpenLogInModal] = useState(false);
 
-  const {currentUser} = useAuth();
+  const {currentUserData} = useUser();
 
   const {addWatch} = useAddToWatch();
 
@@ -50,7 +50,7 @@ function Home() {
   }
 
   function addToWatchLater(newMovieLater) {
-    addWatch({...newMovieLater, userId: currentUser.id})
+    addWatch({...newMovieLater, userId: currentUserData.id})
   }
 
   // useEffect(() => {

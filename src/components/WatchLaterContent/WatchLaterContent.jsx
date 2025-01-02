@@ -8,7 +8,7 @@ import { useConfiguration } from '../../hooks/useConfiguration';
 import { Box } from '@mui/material';
 import WatchLaterMediaBlock from '../MediaBlock/WatchLaterMediaBlock';
 import useRemoveWatchLater from '../../hooks/useRemoveWatchLater';
-import { useAuth } from '../../store/Auth/useAuth';
+
 
 function WatchLaterContent() {
   const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
@@ -17,7 +17,7 @@ function WatchLaterContent() {
   const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
   const imagesBaseUrl = configuration?.imagesBaseUrl;
   const imagePosterSizes = configuration?.imagePosterSizes[5];
-  const {currentUser} = useAuth()
+  
 
   function removeFromWatchLater(movieId) {
     removeWatchLater(movieId)

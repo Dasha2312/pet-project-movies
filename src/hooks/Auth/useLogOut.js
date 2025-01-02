@@ -10,7 +10,7 @@ function useLogOut() {
     mutationFn: logOut,
     onSuccess: () => {
       queryClient.removeQueries();
-      navigate(0, {replace: true})
+      navigate('/home', {replace: true})
     }
   })  
 

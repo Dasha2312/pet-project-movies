@@ -21,6 +21,7 @@ function useTarifPlan() {
           tariffPlanTitle: selectedPlan.tariffPlanTitle,
           tariffPlanPrice: selectedPlan.tariffPlanPrice,
           tariffPlanType: selectedPlan.tariffPlanType,
+          tariffPlanMethod: selectedPlan.tariffPlanMethod
         })
       );
     },

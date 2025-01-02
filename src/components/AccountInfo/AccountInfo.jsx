@@ -1,31 +1,33 @@
 import { Box, Container, TextField } from "@mui/material";
-import { useAuth } from "../../store/Auth/useAuth";
+
 import { Controller, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useUpdateUser } from "../../hooks/Auth/useUpdateUser";
+import useUser from "../../hooks/Auth/useUser";
 
 
 function AccountInfo() {
-  const {currentUser} = useAuth();
-  const {updateUser, isPendingUpdateUser} = useUpdateUser()
+  ;
+  const {updateUser, isPendingUpdateUser} = useUpdateUser();
+  const {currentUserData, isAuthenticated} = useUser();
 
   const {control, reset, handleSubmit, formState: {errors}, getValues} = useForm({
     defaultValues: {
-      fullName: currentUser?.user_metadata?.fullName || '',
-      email: currentUser?.user_metadata?.email || '',
+      fullName: currentUserData?.user_metadata?.fullName || '',
+      email: currentUserData?.user_metadata?.email || '',
       newPassword: '',
       confirmNewPassword: ''
     }
   });
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUserData) {
       reset({
-        fullName: currentUser.user_metadata?.fullName || '',
-        email: currentUser?.user_metadata?.email || '',
+        fullName: currentUserData.user_metadata?.fullName || '',
+        email: currentUserData?.user_metadata?.email || '',
       });
     }
-  }, [currentUser, reset]);
+  }, [currentUserData, reset]);
 
   function onSubmit({fullName, email, newPassword}) {
     //need update currentUser after updateUser

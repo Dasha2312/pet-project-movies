@@ -18,13 +18,15 @@ import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
 import { useContextProvider } from '../../context/useContext';
 import useAddToWatch from '../../hooks/useAddToWatch';
 import useGetWatchLater from '../../hooks/useGetWatchLater';
-import { useAuth } from '../../store/Auth/useAuth';
+import useUser from '../../hooks/Auth/useUser';
+
 
 function CatalogMovies() {
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [catalogPage, setCatalogPage] = useState(1);
 
   const {genreId} = useParams();
+  const {currentUserData, isAuthenticated} = useUser();
 
   const {discoverMoviePending, discoverMovie, discoverMovieError} = useDiscoverMovies(genreId, catalogPage);
   const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
@@ -51,7 +53,7 @@ function CatalogMovies() {
   }, [genreMoviesListPending, genreId]);
 
   const [openLogIn, setOpenLogInModal] = useState(false);
-  const {currentUser} = useAuth();
+  ;
 
   const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
 
@@ -62,7 +64,7 @@ function CatalogMovies() {
   }
 
   function addToWatchLater(newMovieLater) {
-    addWatch({...newMovieLater, userId: currentUser.id})
+    addWatch({...newMovieLater, userId: currentUserData.id})
   }
 
   return (

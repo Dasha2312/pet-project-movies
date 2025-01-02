@@ -7,15 +7,15 @@ import StarIcon from '@mui/icons-material/Star';
 
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '../../store/Auth/useAuth';
 import { useDispatch } from 'react-redux';
 import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
+import useUser from '../../hooks/Auth/useUser';
 
 
 function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
 
-  const {isAuthenticated, loading} = useAuth();
+  const { currentUserPending, isAuthenticated} = useUser();
 
   const [isAdded, setIsAdded] = useState(isAddedToWatchLater);
 
@@ -35,7 +35,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       movieImg: media.poster_path,
       movieReleasedDate: media.release_date ?? ''
     }
-    if (loading) {
+    if (currentUserPending) {
       return;
     }
 

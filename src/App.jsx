@@ -11,12 +11,14 @@ import Support from './pages/Support';
 import Subscriptions from './pages/Subscriptions';
 import PageNotFound from './UI/PageNotFound/PageNotFound';
 import Layout from './pages/Layout';
-import { ContextProvider } from './context/useContext';
+
 import { Toaster } from 'react-hot-toast';
 import AccountPage from './pages/AccountPage/AccountPage';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import WatchLater from './pages/WatchLater/WatchLater';
+
+import Payments from './pages/Payments/Payments';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,7 @@ function App() {
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
               <Route path='account' element={<AccountPage />} />
+              <Route path='payments' element={<Payments />} />
 
               <Route path='*' element={<PageNotFound />} />
             </Route>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,26 +18,19 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import style from './MainMenu.module.scss'
 import SearchBlock from '../SearchBlock/SearchBlock';
-import SingInForm from '../SingUpForm/SingUpForm';
-import LogIn from '../LogIn/LogIn';
-import SingUpForm from '../SingUpForm/SingUpForm';
+import Sing_In_Up from '../Sing_In_Up/Sing_In_Up';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
 import useUser from '../../hooks/Auth/useUser';
 import useLogOut from '../../hooks/Auth/useLogOut';
-import { useContextProvider } from '../../context/useContext';
-import Sing_In_Up from '../Sing_In_Up/Sing_In_Up';
-import { useAuth } from '../../store/Auth/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOutUser } from '../../store/Auth/authSlice';
-import mobileSlice, { mobileState } from '../../store/mobileSlice';
-import useMobileState from '../../hooks/useMobileState';
-import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
 
 
 const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainMenu({classBlock}) {
   const dispatch = useDispatch();
+
 
   const [searchShow, setSearchShow] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -46,30 +38,23 @@ function MainMenu({classBlock}) {
 
   const [openLogIn, setOpenLogInModal] = useState(false)
 
-  // const {isAuthenticated, currentUser} = useContextProvider();
-
-  const {currentUser, isAuthenticated} = useAuth();
+  const {currentUserData, isAuthenticated} = useUser();
 
   const countWatchLater = useSelector(state => state.countWatchLater.count)
 
-  // const {logout, isPengindLogOut} = useLogOut();
+  const {logout} = useLogOut();
 
 
   function handleLogOut() {
-    dispatch(logOutUser());
+    logout();
     setAnchorElNav(null);
   }
 
   useEffect(() => {
-    dispatch(fetchWatchLaterMovies());
-  }, [dispatch])
-
-
-  // const isMobile = useMobileState();
-
-  console.log('countWatchLater', countWatchLater)
-
-  
+    if (isAuthenticated) {
+      dispatch(fetchWatchLaterMovies());
+    }
+  }, [dispatch, isAuthenticated]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -94,7 +79,6 @@ function MainMenu({classBlock}) {
   function handleOpenLogInModal() {
     setOpenLogInModal(true)
   }
-
 
 
   return (
@@ -193,7 +177,7 @@ function MainMenu({classBlock}) {
                       onClose={handleCloseUserMenu}
                     >
                       <MenuItem>
-                        <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUser?.user_metadata.userName}</Typography>
+                        <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUserData.user_metadata.userName}</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <NavLink to="/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
@@ -202,10 +186,10 @@ function MainMenu({classBlock}) {
                         <NavLink to="/account" sx={{ textAlign: 'center' }}>Account</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography sx={{ textAlign: 'center' }}>Subscriptions</Typography>
+                        <NavLink to="/subscriptions" sx={{ textAlign: 'center' }}>Subscriptions</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography sx={{ textAlign: 'center' }}>Payments</Typography>
+                        <NavLink to="/payments" sx={{ textAlign: 'center' }}>Payments</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleLogOut}>
                         <Typography sx={{ textAlign: 'center' }}>Log Out</Typography>

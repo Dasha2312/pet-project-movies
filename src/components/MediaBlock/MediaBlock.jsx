@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import style from "./MediaBlock.module.scss"
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -10,12 +10,14 @@ import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
 import useUser from '../../hooks/Auth/useUser';
+import useRemoveWatchLater from '../../hooks/useRemoveWatchLater';
 
 
 function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
 
   const { currentUserPending, isAuthenticated} = useUser();
+  const {removeWatchLater} = useRemoveWatchLater();
 
   const [isAdded, setIsAdded] = useState(isAddedToWatchLater);
 
@@ -27,7 +29,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
     }
   }, [isAddedToWatchLater]);
 
-  function handleBookmarkClick(media) {
+  const handleBookmarkClick = useCallback(async(media) => {
     const newMovieLater = {
       movieId: media.id,
       movieName: media.original_title ?? media.original_name,
@@ -39,24 +41,27 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       return;
     }
 
-    if(isAuthenticated) {
-      try {
-        
-        addToWatchLater(newMovieLater);
-        setIsAdded(prev => {
-          if(prev) {
-            dispatch(decrementCounter())
-          } else {
-            dispatch(incrementCounter())
-          }
-        })
-      } catch (error) {
-        toast.error(error.message)
-      }
-    } else {
-      openLogInModal()
+    if (!isAuthenticated) {
+      openLogInModal();
+      return;
     }
-  }
+
+    try {
+      if (isAdded) {
+        await removeWatchLater(newMovieLater.movieId);
+        setIsAdded(false);
+        dispatch(decrementCounter());
+      } else {
+        await addToWatchLater(newMovieLater); 
+        setIsAdded(true);
+        dispatch(incrementCounter());
+      }
+    } catch (error) {
+      toast.error(error.message)
+      dispatch(incrementCounter())
+    }
+
+  },[isAdded, isAuthenticated, currentUserPending, openLogInModal, addToWatchLater, removeWatchLater, dispatch])
 
   return (
     <Box className={style.mediaItem}>

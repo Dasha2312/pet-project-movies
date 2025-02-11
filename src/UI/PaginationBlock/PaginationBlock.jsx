@@ -1,12 +1,12 @@
 import { Box, Pagination } from '@mui/material';
 
 
-function PaginationBlock({result, currentReviewPage, nextReviewPage, total_pages}) {
+function PaginationBlock({currentReviewPage, nextReviewPage, total_pages}) {
 
   return (
     <>
       {total_pages > 1 && (
-        <Box sx={{marginTop: "30px", display: 'flex', justifyContent: 'center'}}>
+        <Box sx={{marginTop: "90px", display: 'flex', justifyContent: 'center'}}>
           <Pagination
             count={total_pages}
             page={currentReviewPage}

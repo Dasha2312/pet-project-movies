@@ -39,7 +39,7 @@ export async function logOut() {
 }
 
 
-export async function resetPassword() {
+export async function resetPassword({email}) {
   let { data, error } = await supabase.auth.resetPasswordForEmail(email);
 
   if (error) throw new Error(error.message);
@@ -50,13 +50,14 @@ export async function resetPassword() {
 
 
 export async function getCurrentUser() {
-  const { data: session } = await supabase.auth.getSession();
-  if (!session.session) return null;
+  // const { data: session } = await supabase.auth.getSession();
+  // if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
 
   if (error) throw new Error(error.message);
-
+console.log('user', data)
+// console.log('session', session.session)
   return data?.user;
 } 
 

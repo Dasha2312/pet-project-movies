@@ -10,9 +10,12 @@ const tariffSlice = createSlice({
   reducers: {
     setSelectedTariff(state, action) {
       state.selectedTariff = action.payload
+    },
+    resetTariff(state) {
+      state.selectedTariff = null
     }
   }
 })
 
-export const {setSelectedTariff} = tariffSlice.actions;
+export const {setSelectedTariff, resetTariff} = tariffSlice.actions;
 export  default tariffSlice.reducer

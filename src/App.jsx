@@ -20,7 +20,15 @@ import WatchLater from './pages/WatchLater/WatchLater';
 
 import Payments from './pages/Payments/Payments';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 function App() {
   return (
@@ -37,11 +45,15 @@ function App() {
               <Route path='movies' element={<CatalogMovies />} />
               <Route path='shows' element={<CatalogShows />} />
               <Route path='search' element={<CatalogSearch />} />
-              <Route path='watch_later' element={<WatchLater />} />
               <Route path='support' element={<Support />} />
               <Route path='subscriptions' element={<Subscriptions />} />
-              <Route path='account' element={<AccountPage />} />
-              <Route path='payments' element={<Payments />} />
+
+              <Route path='account'>
+                <Route path='watch_later' element={<WatchLater />} />
+                <Route path='subscriptions' element={<Subscriptions />} />
+                <Route path='setting' element={<AccountPage />} />
+                <Route path='payments' element={<Payments />} />
+              </Route>
 
               <Route path='*' element={<PageNotFound />} />
             </Route>

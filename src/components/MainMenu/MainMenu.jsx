@@ -33,8 +33,8 @@ function MainMenu({classBlock}) {
 
 
   const [searchShow, setSearchShow] = useState(false)
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(false);
 
   const [openLogIn, setOpenLogInModal] = useState(false)
 
@@ -47,7 +47,7 @@ function MainMenu({classBlock}) {
 
   function handleLogOut() {
     logout();
-    setAnchorElNav(null);
+    setAnchorElNav(false);
   }
 
   useEffect(() => {
@@ -79,7 +79,6 @@ function MainMenu({classBlock}) {
   function handleOpenLogInModal() {
     setOpenLogInModal(true)
   }
-
 
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
@@ -180,16 +179,16 @@ function MainMenu({classBlock}) {
                         <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUserData.user_metadata.userName}</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
+                        <NavLink to="/account/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/account" sx={{ textAlign: 'center' }}>Account</NavLink>
+                        <NavLink to="/account/setting" sx={{ textAlign: 'center' }}>Account</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/subscriptions" sx={{ textAlign: 'center' }}>Subscriptions</NavLink>
+                        <NavLink to="/account/subscriptions" sx={{ textAlign: 'center' }}>Subscriptions</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/payments" sx={{ textAlign: 'center' }}>Payments</NavLink>
+                        <NavLink to="/account/payments" sx={{ textAlign: 'center' }}>Payments</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleLogOut}>
                         <Typography sx={{ textAlign: 'center' }}>Log Out</Typography>

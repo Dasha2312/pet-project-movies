@@ -26,8 +26,6 @@ function CatalogMedia({discoverMovie, currentReviewPage, nextReviewPage, imagePo
         }
       </Grid>
       <PaginationBlock result={discoverMovie} total_pages={discoverMovie?.total_pages} currentReviewPage={currentReviewPage} nextReviewPage={nextReviewPage}  />
-
-      
     </>
   );
 }

@@ -1,7 +1,6 @@
 import supabase from "../apiSupabase"
 
 export async function getTariffPlan(userId) {
-  console.log('userId', userId)
   let { data: userTariffPlan, error: userTariffPlanError } = await supabase
       .from('user_tariff_plan')
       .select('*')
@@ -12,8 +11,20 @@ export async function getTariffPlan(userId) {
     throw new Error(userTariffPlanError.message)
   }
 
-
-  console.log('userTariffPlan', userTariffPlan)
-
   return userTariffPlan
+}
+
+export async function getCurrentTariffPlan(userId) {
+  const { data: currentTariff, error: currentTariffErrot } = await supabase
+    .from("user_tariff_plan")
+    .select("*")
+    .eq('userId', userId)
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if(currentTariffErrot) {
+    throw new Error(currentTariffErrot.message)
+  }
+
+  return currentTariff
 }

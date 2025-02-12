@@ -1,64 +1,69 @@
-import { Box, Button, Container, Modal } from '@mui/material';
+import { Box, Button, Container, Modal, Skeleton } from '@mui/material';
 import style from './Subscription.module.scss'
 import Grid from '@mui/material/Grid2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SubscriptionTable from './subscriptionTable';
 import { useForm } from 'react-hook-form';
 import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedTariff } from '../../store/tariffSlice';
-import useInitializeTariff from '../../hooks/TarifPlan/useInitializeTariff';
 import useUser from '../../hooks/Auth/useUser';
+import {useCurrentTariffPlan} from '../../hooks/TarifPlan/useGetTariffPlan';
+
+
+const plans = [
+  {
+    id: 1,
+    title: 'Basic Plan',
+    body: 'Enjoy an extensive library of movies and shows, featuring a range of content, including recently released titles.',
+    priceMonth: '9.99',
+    priceYear: '119.88'
+  },
+  {
+    id: 2,
+    title: 'Standard Plan',
+    body: 'Access to a wider selection of movies and shows, including most new releases and exclusive content',
+    priceMonth: '12.99',
+    priceYear: '155.88'
+  },
+  {
+    id: 3,
+    title: 'Premium Plan',
+    body: 'Access to a widest selection of movies and shows, including all new releases and Offline Viewing',
+    priceMonth: '14.99',
+    priceYear: '179.88'
+  }
+]
+
 
 function Subscription() {
-  const selectedTariff = useSelector((state) => state.tariff.selectedTariff);
-
   const {currentUserData} = useUser();
+  const userId = currentUserData?.id;
 
-  console.log('selectedTariff', selectedTariff);
-
-  const plans = [
-    {
-      id: 1,
-      title: 'Basic Plan',
-      body: 'Enjoy an extensive library of movies and shows, featuring a range of content, including recently released titles.',
-      priceMonth: '9.99',
-      priceYear: '119.88'
-    },
-    {
-      id: 2,
-      title: 'Standard Plan',
-      body: 'Access to a wider selection of movies and shows, including most new releases and exclusive content',
-      priceMonth: '12.99',
-      priceYear: '155.88'
-    },
-    {
-      id: 3,
-      title: 'Premium Plan',
-      body: 'Access to a widest selection of movies and shows, including all new releases and Offline Viewing',
-      priceMonth: '14.99',
-      priceYear: '179.88'
+  const {currentTariffPlan, currentTariffPlanIsPending} = useCurrentTariffPlan(userId);
+  function normalizeTariff(tariff) {
+    if (Array.isArray(tariff)) {
+      return tariff[0] || null;
     }
-  ]
+    return tariff || null;
+  }
+
+  const normalizedTariff = normalizeTariff(currentTariffPlan);
 
   const {tarifPlan} = useTarifPlan();
-  
-  const dispatch = useDispatch();
+
 
   const [typePlan, setTypePlans] = useState('monthly');
   const [showPayModal, setShowPayModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('');
   const {handleSubmit, reset} = useForm();
 
+
   function handlePlanType(type) {
     setTypePlans(type)
   }
 
   function openPayModal(selectPlan, method) {
-    
     setSelectedPlan({...selectPlan, method})
     setShowPayModal(true)
-    console.log('selectedPlan', selectedPlan)
   }
 
   function handleCloseModal() {
@@ -80,22 +85,17 @@ function Subscription() {
         reset();
       },
       onSuccess: () => {
-        dispatch(setSelectedTariff(userPlan));
         setShowPayModal(false)
         reset()
       }
     })
   }
-
-  function normalizeTariff(tariff) {
-    if (Array.isArray(tariff)) {
-      return tariff[0] || null;
-    }
-    return tariff || null;
-  }
   
-  useInitializeTariff(currentUserData?.id);
-  const normalizedTariff = normalizeTariff(selectedTariff);
+  useEffect(() => {
+    if (normalizedTariff?.tariffPlanType) {
+      setTypePlans(normalizedTariff.tariffPlanType);
+    }
+  }, [normalizedTariff]);
 
 
   return (
@@ -104,44 +104,105 @@ function Subscription() {
         <Container>
           <Box className={style.subscriptionPage__header}>
             <Box className={style.subscriptionPage__headerLeft}>
-              <Box component="h1" className={style.subscriptionPage__headerTitle}>Choose the plan that is right for you</Box>
+              <Box
+                component="h1"
+                className={style.subscriptionPage__headerTitle}
+              >
+                Choose the plan that is right for you
+              </Box>
               <Box className={style.subscriptionPage__headerSubtitle}>
-                Join StreamVibe and select from our flexible subscription options tailored to suit your viewing preferences. Get ready for non-stop entertainment!
+                Join StreamVibe and select from our flexible subscription
+                options tailored to suit your viewing preferences. Get ready for
+                non-stop entertainment!
               </Box>
             </Box>
             <Box className={style.subscriptionPage__headerRight}>
               <Box className={style.subscriptionPage__headerButtons}>
-                <button type='button' className={`${style.subscriptionPage__headerButton} ${typePlan === 'monthly' ? style.active : ''}`} onClick={() => handlePlanType('monthly')}>Monthly</button>
-                <button type='button' className={`${style.subscriptionPage__headerButton} ${typePlan === 'yearly' ? style.active : ''}`} onClick={() => handlePlanType('yearly')}>Yearly</button>
+                {currentTariffPlanIsPending
+                  ? 
+                    <Skeleton variant="rectangular"  height={45} sx={{ borderRadius: '10px', bgcolor: '#1f1f1f', width: '100%'}}  />
+                  :
+
+                    <>
+                      <button
+                        type="button"
+                        className={`${style.subscriptionPage__headerButton} ${
+                          typePlan === "monthly" ? style.active : ""
+                        }`}
+                        onClick={() => handlePlanType("monthly")}
+                      >
+                        Monthly
+                      </button>
+                      <button
+                        type="button"
+                        className={`${style.subscriptionPage__headerButton} ${
+                          typePlan === "yearly" ? style.active : ""
+                        }`}
+                        onClick={() => handlePlanType("yearly")}
+                      >
+                        Yearly
+                      </button>
+                    </>
+                }
               </Box>
             </Box>
           </Box>
 
           <Box className={style.subscriptionPage__plansItems}>
             <Grid container spacing={3}>
-              {plans.map(plan => (
-                <Grid size={{xl: 4, lg: 4, md: 12, xs: 12}} key={plan.id}>
+              {plans.map((plan) => (
+                <Grid size={{ xl: 4, lg: 4, md: 12, xs: 12 }} key={plan.id}>
                   <Box className={style.subscriptionPage__plansItem}>
-                    <Box className={style.subscriptionPage__plansItem__title}>{plan.title}</Box>
-                    <Box className={style.subscriptionPage__plansItem__subtitle}>
+                    <Box className={style.subscriptionPage__plansItem__title}>
+                      {plan.title}
+                    </Box>
+                    <Box
+                      className={style.subscriptionPage__plansItem__subtitle}
+                    >
                       {plan.body}
                     </Box>
                     <Box className={style.subscriptionPage__plansItem__price}>
-                      ${typePlan === 'monthly' ? plan.priceMonth : plan.priceYear}
+                      $
+                      {typePlan === "monthly"
+                        ? plan.priceMonth
+                        : plan.priceYear
+                      }
                       <span>/month</span>
                     </Box>
-                    <Box className={style.subscriptionPage__plansItem__buttons}>
-                      {normalizedTariff?.tariffPlanId == plan.id && normalizedTariff?.tariffPlanType ==  typePlan ? (
-                        <>
-                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`}>Active Plan</button>
-                        </>
-                      ) : (
-                        <>
-                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnBlack small`} onClick={() => openPayModal(plan, 'freeTrial')}>Start Free Trial</button>
-                          <button type='button' className={`${style.subscriptionPage__plansItem__button} btnRed small`} onClick={() => openPayModal(plan, 'buy')}>Choose Plan</button>
-                        </>
-                      )
 
+                    <Box className={style.subscriptionPage__plansItem__buttons}>
+                      {currentTariffPlanIsPending 
+                        ? 
+                          <Skeleton variant="rectangular"  height={48} sx={{ borderRadius: '8px', bgcolor: '#999', width: '100%'}}  />
+                        :
+                          normalizedTariff?.tariffPlanId == plan.id &&
+                          normalizedTariff?.tariffPlanType == typePlan ? (
+                            <>
+                              <button
+                                type="button"
+                                className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                              >
+                                Active Plan
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
+                                onClick={() => openPayModal(plan, "freeTrial")}
+                              >
+                                Start Free Trial
+                              </button>
+                              <button
+                                type="button"
+                                className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                                onClick={() => openPayModal(plan, "buy")}
+                              >
+                                Choose Plan
+                              </button>
+                            </>
+                          )
                       }
                     </Box>
                   </Box>
@@ -156,9 +217,16 @@ function Subscription() {
         <Container>
           <Box className={style.subscriptionPage__header}>
             <Box className={style.subscriptionPage__headerLeft}>
-              <Box component="h1" className={style.subscriptionPage__headerTitle}>Compare our plans and find the right one for you</Box>
+              <Box
+                component="h1"
+                className={style.subscriptionPage__headerTitle}
+              >
+                Compare our plans and find the right one for you
+              </Box>
               <Box className={style.subscriptionPage__headerSubtitle}>
-                StreamVibe offers three different plans to fit your needs: Basic, Standard, and Premium. Compare the features of each plan and choose the one that is right for you.
+                StreamVibe offers three different plans to fit your needs:
+                Basic, Standard, and Premium. Compare the features of each plan
+                and choose the one that is right for you.
               </Box>
             </Box>
           </Box>
@@ -174,15 +242,31 @@ function Subscription() {
         onClose={handleCloseModal}
         sx={{
           ".MuiBackdrop-root": {
-            backgroundColor: "rgba(0, 0, 0, 0.85)"
-          }
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+          },
         }}
       >
-        <Box className="modal-block" component="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box component="h2" sx={{textAlign: "center", mb: '20px'}}>Payment</Box>
-          <Box sx={{mb: "20px", fontSize: "18px", fontWeight: '500'}}><Box sx={{fontWeight: 'bold', display: "inline-block"}}>{selectedPlan.title}</Box> - {typePlan == 'monthly' ? `${selectedPlan.priceMonth}/month` : `${selectedPlan.priceYear}/year`}</Box>
-          <Box sx={{mt: '20px'}}>
-            <Button fullWidth type="submit" className="btnRed">Buy</Button>
+        <Box
+          className="modal-block"
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Box component="h2" sx={{ textAlign: "center", mb: "20px" }}>
+            Payment
+          </Box>
+          <Box sx={{ mb: "20px", fontSize: "18px", fontWeight: "500" }}>
+            <Box sx={{ fontWeight: "bold", display: "inline-block" }}>
+              {selectedPlan.title}
+            </Box>{" "}
+            -{" "}
+            {typePlan == "monthly"
+              ? `${selectedPlan.priceMonth}/month`
+              : `${selectedPlan.priceYear}/year`}
+          </Box>
+          <Box sx={{ mt: "20px" }}>
+            <Button fullWidth type="submit" className="btnRed">
+              Buy
+            </Button>
           </Box>
         </Box>
       </Modal>

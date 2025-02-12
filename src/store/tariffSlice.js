@@ -9,6 +9,7 @@ const tariffSlice = createSlice({
   initialState,
   reducers: {
     setSelectedTariff(state, action) {
+      console.log('payload', action.payload)
       state.selectedTariff = action.payload
     },
     resetTariff(state) {

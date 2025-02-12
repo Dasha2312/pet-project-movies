@@ -1,6 +1,6 @@
 import { Box, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import useGetTariffPlan from "../../hooks/TarifPlan/useGetTariffPlan";
-import { europDate } from "../../helper/helper";
+import {useGetTariffPlan} from "../../hooks/TarifPlan/useGetTariffPlan";
+import { europDateTime } from "../../helper/helper";
 import useMobileState from "../../hooks/useMobileState";
 import useUser from "../../hooks/Auth/useUser";
 
@@ -23,7 +23,7 @@ function Payment() {
             {
               !isMobile ? (
                 <TableContainer>
-                  <Table fullWidth>
+                  <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell sx={{color: "#fff"}}>Number</TableCell>
@@ -41,7 +41,7 @@ function Payment() {
                             <TableCell sx={{color: "#fff", borderBottom: "0", fontWeight: "600"}}>{tariffPlan.tariffPlanTitle}</TableCell>
                             <TableCell sx={{color: "#fff", borderBottom: "0", fontWeight: "600"}}>{tariffPlan.tariffPlanPrice} $</TableCell>
                             <TableCell sx={{color: "#fff", borderBottom: "0"}}>method</TableCell>
-                            <TableCell sx={{color: "#a6a6a6", textAlign: "right", borderBottom: "0"}}>{europDate(tariffPlan.created_at)}</TableCell>
+                            <TableCell sx={{color: "#a6a6a6", textAlign: "right", borderBottom: "0"}}>{europDateTime(tariffPlan.created_at)}</TableCell>
                           </TableRow>
                         ))
                       }
@@ -65,7 +65,7 @@ function Payment() {
                           Operation number: {tariffPlan.id}
                         </Box>
                         <Box className="historyList__item__date" sx={{color: "#373737", fontWeight: "600", fontSize: "12px"}}>
-                          {europDate(tariffPlan.created_at)}
+                          {europDateTime(tariffPlan.created_at)}
                         </Box>
                       </Box>
                       <Box className="historyList__item__method" sx={{color: "rgba(27,27,27,.5)", fontWeight: "600", fontSize: "12px"}}>

@@ -12,6 +12,10 @@
   &__headerLeft {
     margin-right: 100px;
   }
+  &__headerRight {
+    max-width: 210px;
+    flex: 0 0 210px;
+  }
   &__headerTitle {
     font-size: clamp(28px, 4vw, 48px);
     margin: 0 0 15px;
@@ -27,6 +31,7 @@
     border-radius: 10px;
     padding: 10px;
     background: #0f0f0f;
+    width: 100%;
   }
   &__headerButton {
     background: transparent;
@@ -38,6 +43,7 @@
     cursor: pointer;
     transition: 0.5s;
     border-radius: 10px;
+    flex: 1;
     &:hover {
       color: #fff;
       transition: 0.5s;

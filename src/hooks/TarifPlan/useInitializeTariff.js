@@ -7,13 +7,13 @@ function useInitializeTariff(userId) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!userId) return; // Ожидаем, пока userId станет доступным
+    if (!userId) return;
 
     async function loadTariff() {
       try {
         const tariff = await getTariffPlan(userId);
         if (tariff) {
-          dispatch(setSelectedTariff(tariff));
+          dispatch(setSelectedTariff(tariff.at(-1)));
         }
       } catch (error) {
         console.error('Error loading tariff:', error.message);

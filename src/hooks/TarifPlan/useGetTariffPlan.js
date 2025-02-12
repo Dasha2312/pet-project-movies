@@ -1,15 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTariffPlan } from "../../services/TariffPlan/apiGetTariffPlan";
+import { getCurrentTariffPlan, getTariffPlan } from "../../services/TariffPlan/apiGetTariffPlan";
 
-function useGetTariffPlan(userId) {
+export function useGetTariffPlan(userId) {
   const {isPending: getAllTariffPlansPending, data: getAllTariffPlans} = useQuery({
     queryKey: ["userTariffPlans"],
     queryFn: () => getTariffPlan(userId),
-    refetchOnWindowFocus: false
-
+    refetchOnWindowFocus: false,
+    enabled: !!userId
   })
 
-  return {getAllTariffPlansPending, getAllTariffPlans }
+  return {getAllTariffPlansPending, getAllTariffPlans  }
 }
 
-export default useGetTariffPlan;
+export function useCurrentTariffPlan(userId) {
+  const {data: currentTariffPlan, isPending: currentTariffPlanIsPending} = useQuery({
+    queryKey: ["currentTariff"],
+    queryFn: () => getCurrentTariffPlan(userId),
+    refetchOnWindowFocus: false,
+    enabled: !!userId
+  })
+
+  return {currentTariffPlan, currentTariffPlanIsPending}
+}
+

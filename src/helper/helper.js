@@ -7,3 +7,7 @@ export function changeDate(date) {
 export function europDate(date) {
   return date ? dayjs(date).format('DD.MM.YYYY') : null
 }
+
+export function europDateTime(date) {
+  return date ? dayjs(date).format('DD.MM.YYYY HH:MM') : null
+}

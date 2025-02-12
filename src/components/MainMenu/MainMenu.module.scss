@@ -47,4 +47,23 @@
       transition: 0.5s;
     }
   }
+  &__countWatchLater {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 5px;
+    background: #e50000;
+    border-radius: 9999px;
+    color: #ffff;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+.MenuItem__link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  // padding: 0 0 0 15px;
 }

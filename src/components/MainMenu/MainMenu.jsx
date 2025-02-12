@@ -161,7 +161,15 @@ function MainMenu({classBlock}) {
                       </IconButton>
                     </Tooltip>
                     <Menu
-                      sx={{ mt: '45px' }}
+                      sx={{ mt: '45px',     
+                        
+                        "& .MuiPaper-root": {
+                          background: '#0f0f0f',
+                          border: '3px solid #1f1f1f',
+                          borderRadius: '10px',
+                          padding: '8px 15px',
+                        },
+                      }}
                       id="menu-appbar"
                       anchorEl={anchorElUser || null}
                       anchorOrigin={{
@@ -177,22 +185,24 @@ function MainMenu({classBlock}) {
                       onClose={handleCloseUserMenu}
                     >
                       <MenuItem>
-                        <Typography sx={{ textAlign: 'center', fontWeight: 600 }}>{currentUserData.user_metadata.userName}</Typography>
+                        <Typography sx={{ color: '#fff', fontWeight: 500 }}>{currentUserData.user_metadata.userName}</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/account/watch_later" sx={{ textAlign: 'center' }}>Watch Later {countWatchLater}</NavLink>
+                        <NavLink to="/account/watch_later" className={({ isActive }) => `${style.MenuItem__link} ${style.header__menuLink} ${isActive ? style.active : ''}`}>Watch Later <span className={`${style.header__countWatchLater}`}>{countWatchLater}</span></NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/account/setting" sx={{ textAlign: 'center' }}>Account</NavLink>
+                        <NavLink to="/account/setting" className={({ isActive }) => `${style.MenuItem__link} ${style.header__menuLink} ${isActive ? style.active : ''}`}>Account</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/account/subscriptions" sx={{ textAlign: 'center' }}>Subscriptions</NavLink>
+                        <NavLink to="/account/subscriptions" className={({ isActive }) => `${style.MenuItem__link} ${style.header__menuLink} ${isActive ? style.active : ''}`}>Subscriptions</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/account/payments" sx={{ textAlign: 'center' }}>Payments</NavLink>
+                        <NavLink to="/account/payments" className={({ isActive }) => 
+                          `${style.MenuItem__link} ${style.header__menuLink} ${isActive ? style.active : ''}`
+                        }>Payments</NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleLogOut}>
-                        <Typography sx={{ textAlign: 'center' }}>Log Out</Typography>
+                        <Typography sx={{ color: '#fff', fontWeight: 500 }}>Log Out</Typography>
                       </MenuItem>
                     </Menu>
                   </>

@@ -42,19 +42,19 @@ h1 {
   white-space: nowrap;
 }
 .btnRed {
-  border-radius: 8px !important;
-  padding: 10px !important;
-  color: #fff !important;
-  background-color: #e50000 !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
+  border-radius: 8px;
+  padding: 10px;
+  color: #fff;
+  background-color: #e50000;
+  font-weight: 600;
+  font-size: 16px;
   transition: 0.5s;
-  border: 0 !important;
+  border: 0;
   cursor: pointer;
   white-space: nowrap;
   &:hover {
     transition: 0.5s;
-    background: #ff2626 !important;
+    background: #ff2626;
   }
 }
 .btn-outline {

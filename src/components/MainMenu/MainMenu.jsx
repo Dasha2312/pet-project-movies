@@ -34,7 +34,7 @@ function MainMenu({classBlock}) {
 
   const [searchShow, setSearchShow] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const [openLogIn, setOpenLogInModal] = useState(false)
 
@@ -53,6 +53,7 @@ function MainMenu({classBlock}) {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchWatchLaterMovies());
+      setAnchorElUser(null);
     }
   }, [dispatch, isAuthenticated]);
 
@@ -116,7 +117,7 @@ function MainMenu({classBlock}) {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
+              //sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
@@ -162,7 +163,7 @@ function MainMenu({classBlock}) {
                     <Menu
                       sx={{ mt: '45px' }}
                       id="menu-appbar"
-                      anchorEl={anchorElUser}
+                      anchorEl={anchorElUser || null}
                       anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',

@@ -1,12 +1,8 @@
-import { Box, Button, Modal, TextField } from "@mui/material";
+import { Box, Modal, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useLogIn } from "../../hooks/Auth/useLogIn";
 
 import LoadingButton from '@mui/lab/LoadingButton';
-
-import SendIcon from '@mui/icons-material/Send';
-import SaveIcon from '@mui/icons-material/Save';
-
 
 
 function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInModal}) {

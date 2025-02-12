@@ -10,10 +10,6 @@ function Sing_In_Up({openLogIn, setOpenLogInModal}) {
     setOpenLogInModal(false)
   }
 
-  function openSingUpModal() {
-    setOpenModalSingUp(true)
-  }
-
   function closeSingUpModal() {
     setOpenModalSingUp(false)
   }

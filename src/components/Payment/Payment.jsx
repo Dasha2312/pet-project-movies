@@ -12,6 +12,10 @@ function Payment() {
 
   const isMobile = useMobileState()
 
+  if(getAllTariffPlansPending) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Box>
       <Container>

@@ -13,11 +13,15 @@ export function useGetTariffPlan(userId) {
 }
 
 export function useCurrentTariffPlan(userId) {
+  const isEnabled = userId !== undefined && userId !== null;
+
   const {data: currentTariffPlan, isPending: currentTariffPlanIsPending} = useQuery({
     queryKey: ["currentTariff"],
     queryFn: () => getCurrentTariffPlan(userId),
     refetchOnWindowFocus: false,
-    enabled: !!userId
+    enabled: isEnabled,
+    retry: false,
+    suspense: false
   })
 
   return {currentTariffPlan, currentTariffPlanIsPending}

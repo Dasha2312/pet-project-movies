@@ -4,7 +4,7 @@ export async function getTariffPlan(userId) {
   let { data: userTariffPlan, error: userTariffPlanError } = await supabase
       .from('user_tariff_plan')
       .select('*')
-      .eq('userId', userId)
+      .eq('user_id', userId)
       
 
   if(userTariffPlanError) {
@@ -18,8 +18,8 @@ export async function getCurrentTariffPlan(userId) {
   const { data: currentTariff, error: currentTariffErrot } = await supabase
     .from("user_tariff_plan")
     .select("*")
-    .eq('userId', userId)
-    .order("created_at", { ascending: false })
+    .eq('user_id', userId)
+    .order("create_at", { ascending: false })
     .limit(1);
 
   if(currentTariffErrot) {

@@ -7,38 +7,15 @@ import { useForm } from 'react-hook-form';
 import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
 import useUser from '../../hooks/Auth/useUser';
 import {useCurrentTariffPlan} from '../../hooks/TarifPlan/useGetTariffPlan';
-
-
-const plans = [
-  {
-    id: 1,
-    title: 'Basic Plan',
-    body: 'Enjoy an extensive library of movies and shows, featuring a range of content, including recently released titles.',
-    priceMonth: '9.99',
-    priceYear: '119.88'
-  },
-  {
-    id: 2,
-    title: 'Standard Plan',
-    body: 'Access to a wider selection of movies and shows, including most new releases and exclusive content',
-    priceMonth: '12.99',
-    priceYear: '155.88'
-  },
-  {
-    id: 3,
-    title: 'Premium Plan',
-    body: 'Access to a widest selection of movies and shows, including all new releases and Offline Viewing',
-    priceMonth: '14.99',
-    priceYear: '179.88'
-  }
-]
-
+import useTariffPlans from '../../hooks/TarifPlan/useTariffPlans';
 
 function Subscription() {
   const {currentUserData} = useUser();
   const userId = currentUserData?.id;
+  console.log('userId ', userId)
 
   const {currentTariffPlan, currentTariffPlanIsPending} = useCurrentTariffPlan(userId);
+
   function normalizeTariff(tariff) {
     if (Array.isArray(tariff)) {
       return tariff[0] || null;
@@ -46,14 +23,16 @@ function Subscription() {
     return tariff || null;
   }
 
+  const {allTariffPlansPending, allTariffPlans} = useTariffPlans();
+
   const normalizedTariff = normalizeTariff(currentTariffPlan);
 
   const {tarifPlan} = useTarifPlan();
 
-
   const [typePlan, setTypePlans] = useState('monthly');
   const [showPayModal, setShowPayModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState(0);
+  const [daysLeft, setDaysLeft] = useState('');
   const {handleSubmit, reset} = useForm();
 
 
@@ -73,13 +52,13 @@ function Subscription() {
   function onSubmit() {
     const userPlan = {
       tariffPlanTitle: selectedPlan.title,
-      tariffPlanPrice: typePlan === "monthly" ? selectedPlan.priceMonth : selectedPlan.priceYear,
-      tariffPlanType: typePlan,
+      tariffPlanPrice: selectedPlan.price,
+      tariffPlanType: selectedPlan.type,
       userId: currentUserData.id,
       tariffPlanId: selectedPlan.id,
       tariffPlanMethod: selectedPlan.method
     }
-    
+
     tarifPlan(userPlan, {
       onSettled: () => {
         reset();
@@ -92,11 +71,33 @@ function Subscription() {
   }
   
   useEffect(() => {
-    if (normalizedTariff?.tariffPlanType) {
-      setTypePlans(normalizedTariff.tariffPlanType);
+    if (normalizedTariff?.tariff_plan_type) {
+      setTypePlans(normalizedTariff.tariff_plan_type);
     }
   }, [normalizedTariff]);
 
+  const plansMonth = allTariffPlans?.filter(item => item.type == 'monthly');
+  const plansYear = allTariffPlans?.filter(item => item.type == 'yearly');
+
+
+  useEffect(() => {
+    if (!normalizedTariff?.finish_at) return;
+
+    const currentDate = new Date();
+    const finishDate = new Date(normalizedTariff?.finish_at);
+    const timeDifference = finishDate - currentDate;
+    setDaysLeft(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
+  }, [normalizedTariff?.finish_at])
+
+  
+
+  const tariffPlan = typePlan == 'monthly' ? plansMonth : plansYear;
+
+  const isLoading = (userId && currentTariffPlanIsPending) || allTariffPlansPending;
+
+  // if (allTariffPlansPending) {
+  //   return <div>Loading...</div>
+  // }
 
   return (
     <Box className={style.subscriptionPage}>
@@ -118,7 +119,7 @@ function Subscription() {
             </Box>
             <Box className={style.subscriptionPage__headerRight}>
               <Box className={style.subscriptionPage__headerButtons}>
-                {currentTariffPlanIsPending
+                {isLoading
                   ? 
                     <Skeleton variant="rectangular"  height={45} sx={{ borderRadius: '10px', bgcolor: '#1f1f1f', width: '100%'}}  />
                   :
@@ -148,9 +149,16 @@ function Subscription() {
             </Box>
           </Box>
 
+          {
+            daysLeft > 0 &&
+              <Box sx={{ mb: 5 }}>
+                <h3>The subscription ends in {daysLeft > 1 ? `${daysLeft} days` : `${daysLeft} day` }. </h3>
+              </Box>
+          }
+
           <Box className={style.subscriptionPage__plansItems}>
             <Grid container spacing={3}>
-              {plans.map((plan) => (
+              {tariffPlan?.map((plan) => (
                 <Grid size={{ xl: 4, lg: 4, md: 12, xs: 12 }} key={plan.id}>
                   <Box className={style.subscriptionPage__plansItem}>
                     <Box className={style.subscriptionPage__plansItem__title}>
@@ -159,24 +167,22 @@ function Subscription() {
                     <Box
                       className={style.subscriptionPage__plansItem__subtitle}
                     >
-                      {plan.body}
+                      {plan.description}
                     </Box>
                     <Box className={style.subscriptionPage__plansItem__price}>
                       $
-                      {typePlan === "monthly"
-                        ? plan.priceMonth
-                        : plan.priceYear
-                      }
-                      <span>/month</span>
+                      {plan.price}
+                      
+                      <span>{plan.type == 'monthly' ? '/month' : '/year'}</span>
                     </Box>
 
                     <Box className={style.subscriptionPage__plansItem__buttons}>
-                      {currentTariffPlanIsPending 
+                      {isLoading 
                         ? 
                           <Skeleton variant="rectangular"  height={48} sx={{ borderRadius: '8px', bgcolor: '#999', width: '100%'}}  />
                         :
-                          normalizedTariff?.tariffPlanId == plan.id &&
-                          normalizedTariff?.tariffPlanType == typePlan ? (
+                          normalizedTariff?.tariff_plan_id == plan.id &&
+                          normalizedTariff?.tariff_plan_type == typePlan ? (
                             <>
                               <button
                                 type="button"
@@ -260,8 +266,8 @@ function Subscription() {
             </Box>{" "}
             -{" "}
             {typePlan == "monthly"
-              ? `${selectedPlan.priceMonth}/month`
-              : `${selectedPlan.priceYear}/year`}
+              ? `$ ${selectedPlan.price}/month`
+              : `$ ${selectedPlan.price}/year`}
           </Box>
           <Box sx={{ mt: "20px" }}>
             <Button fullWidth type="submit" className="btnRed">

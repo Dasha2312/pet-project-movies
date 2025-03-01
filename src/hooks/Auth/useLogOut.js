@@ -14,10 +14,9 @@ function useLogOut() {
     onSuccess: () => {
       toast.success("You log out successfully!")
 
-      queryClient.removeQueries({ queryKey: ['user']});
-      queryClient.removeQueries({ queryKey: ['userTariffPlans']});
+      queryClient.setQueryData(["user"], null);
+      queryClient.removeQueries({ queryKey: ['userTariffPlans']}, null);
       queryClient.removeQueries({ queryKey: ['currentTariff']});
-
 
       if (matchPath("/account/*", location.pathname)) {
         navigate('/home', {replace: true})

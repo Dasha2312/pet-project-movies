@@ -50,14 +50,13 @@ export async function resetPassword({email}) {
 
 
 export async function getCurrentUser() {
-  // const { data: session } = await supabase.auth.getSession();
-  // if (!session.session) return null;
+  const { data: session } = await supabase.auth.getSession();
+  if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
 
   if (error) throw new Error(error.message);
-console.log('user', data)
-// console.log('session', session.session)
+
   return data?.user;
 } 
 

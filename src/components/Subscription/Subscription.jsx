@@ -10,9 +10,9 @@ import {useCurrentTariffPlan} from '../../hooks/TarifPlan/useGetTariffPlan';
 import useTariffPlans from '../../hooks/TarifPlan/useTariffPlans';
 
 function Subscription() {
-  const {currentUserData} = useUser();
-  const userId = currentUserData?.id;
-  console.log('userId ', userId)
+  const {currentUserData, isAuthenticated} = useUser();
+  const userId = currentUserData?.id || null;
+
 
   const {currentTariffPlan, currentTariffPlanIsPending} = useCurrentTariffPlan(userId);
 
@@ -25,7 +25,7 @@ function Subscription() {
 
   const {allTariffPlansPending, allTariffPlans} = useTariffPlans();
 
-  const normalizedTariff = normalizeTariff(currentTariffPlan);
+  let normalizedTariff = normalizeTariff(currentTariffPlan);
 
   const {tarifPlan} = useTarifPlan();
 
@@ -89,15 +89,11 @@ function Subscription() {
     setDaysLeft(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
   }, [normalizedTariff?.finish_at])
 
-  
+
 
   const tariffPlan = typePlan == 'monthly' ? plansMonth : plansYear;
-
   const isLoading = (userId && currentTariffPlanIsPending) || allTariffPlansPending;
 
-  // if (allTariffPlansPending) {
-  //   return <div>Loading...</div>
-  // }
 
   return (
     <Box className={style.subscriptionPage}>
@@ -158,62 +154,66 @@ function Subscription() {
 
           <Box className={style.subscriptionPage__plansItems}>
             <Grid container spacing={3}>
-              {tariffPlan?.map((plan) => (
-                <Grid size={{ xl: 4, lg: 4, md: 12, xs: 12 }} key={plan.id}>
-                  <Box className={style.subscriptionPage__plansItem}>
-                    <Box className={style.subscriptionPage__plansItem__title}>
-                      {plan.title}
-                    </Box>
-                    <Box
-                      className={style.subscriptionPage__plansItem__subtitle}
-                    >
-                      {plan.description}
-                    </Box>
-                    <Box className={style.subscriptionPage__plansItem__price}>
-                      $
-                      {plan.price}
-                      
-                      <span>{plan.type == 'monthly' ? '/month' : '/year'}</span>
-                    </Box>
+              {tariffPlan?.map((plan) => {
+                const hasActivePlan =
+                  isAuthenticated &&
+                  normalizedTariff?.tariff_plan_id === plan.id &&
+                  normalizedTariff?.tariff_plan_type === typePlan;
+                return (
+                  <Grid size={{ xl: 4, lg: 4, md: 12, xs: 12 }} key={plan.id}>
+                    <Box className={style.subscriptionPage__plansItem}>
+                      <Box className={style.subscriptionPage__plansItem__title}>
+                        {plan.title}
+                      </Box>
+                      <Box
+                        className={style.subscriptionPage__plansItem__subtitle}
+                      >
+                        {plan.description}
+                      </Box>
+                      <Box className={style.subscriptionPage__plansItem__price}>
+                        $
+                        {plan.price}
+                        
+                        <span>{plan.type == 'monthly' ? '/month' : '/year'}</span>
+                      </Box>
 
-                    <Box className={style.subscriptionPage__plansItem__buttons}>
-                      {isLoading 
-                        ? 
-                          <Skeleton variant="rectangular"  height={48} sx={{ borderRadius: '8px', bgcolor: '#999', width: '100%'}}  />
-                        :
-                          normalizedTariff?.tariff_plan_id == plan.id &&
-                          normalizedTariff?.tariff_plan_type == typePlan ? (
-                            <>
-                              <button
-                                type="button"
-                                className={`${style.subscriptionPage__plansItem__button} btnRed small`}
-                              >
-                                Active Plan
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                type="button"
-                                className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
-                                onClick={() => openPayModal(plan, "freeTrial")}
-                              >
-                                Start Free Trial
-                              </button>
-                              <button
-                                type="button"
-                                className={`${style.subscriptionPage__plansItem__button} btnRed small`}
-                                onClick={() => openPayModal(plan, "buy")}
-                              >
-                                Choose Plan
-                              </button>
-                            </>
-                          )
-                      }
+                      <Box className={style.subscriptionPage__plansItem__buttons}>
+                        {isLoading ? (
+                          <Skeleton
+                            variant="rectangular"
+                            height={48}
+                            sx={{ borderRadius: "8px", bgcolor: "#999", width: "100%" }}
+                          />
+                        ) : hasActivePlan ? (
+                          <button
+                            type="button"
+                            className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                          >
+                            Active Plan
+                          </button>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
+                              onClick={() => openPayModal(plan, "freeTrial")}
+                            >
+                              Start Free Trial
+                            </button>
+                            <button
+                              type="button"
+                              className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                              onClick={() => openPayModal(plan, "buy")}
+                            >
+                              Choose Plan
+                            </button>
+                          </>
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-              ))}
+                  </Grid>
+                )
+              })}
             </Grid>
           </Box>
         </Container>

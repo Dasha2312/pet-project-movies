@@ -122,42 +122,50 @@ function Subscription() {
             </Box>
             <Box className={style.subscriptionPage__headerRight}>
               <Box className={style.subscriptionPage__headerButtons}>
-                {isLoading
-                  ? 
-                    <Skeleton variant="rectangular"  height={45} sx={{ borderRadius: '10px', bgcolor: '#1f1f1f', width: '100%'}}  />
-                  :
-
-                    <>
-                      <button
-                        type="button"
-                        className={`${style.subscriptionPage__headerButton} ${
-                          typePlan === "monthly" ? style.active : ""
-                        }`}
-                        onClick={() => handlePlanType("monthly")}
-                      >
-                        Monthly
-                      </button>
-                      <button
-                        type="button"
-                        className={`${style.subscriptionPage__headerButton} ${
-                          typePlan === "yearly" ? style.active : ""
-                        }`}
-                        onClick={() => handlePlanType("yearly")}
-                      >
-                        Yearly
-                      </button>
-                    </>
-                }
+                {isLoading ? (
+                  <Skeleton
+                    variant="rectangular"
+                    height={45}
+                    sx={{
+                      borderRadius: "10px",
+                      bgcolor: "#1f1f1f",
+                      width: "100%",
+                    }}
+                  />
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className={`${style.subscriptionPage__headerButton} ${
+                        typePlan === "monthly" ? style.active : ""
+                      }`}
+                      onClick={() => handlePlanType("monthly")}
+                    >
+                      Monthly
+                    </button>
+                    <button
+                      type="button"
+                      className={`${style.subscriptionPage__headerButton} ${
+                        typePlan === "yearly" ? style.active : ""
+                      }`}
+                      onClick={() => handlePlanType("yearly")}
+                    >
+                      Yearly
+                    </button>
+                  </>
+                )}
               </Box>
             </Box>
           </Box>
 
-          {
-            daysLeft > 0 &&
-              <Box sx={{ mb: 5 }}>
-                <h3>The subscription ends in {daysLeft > 1 ? `${daysLeft} days` : `${daysLeft} day` }. </h3>
-              </Box>
-          }
+          {daysLeft > 0 && (
+            <Box sx={{ mb: 5 }}>
+              <h3>
+                The subscription ends in{" "}
+                {daysLeft > 1 ? `${daysLeft} days` : `${daysLeft} day`}.{" "}
+              </h3>
+            </Box>
+          )}
 
           <Box className={style.subscriptionPage__plansItems}>
             <Grid container spacing={3}>
@@ -167,29 +175,76 @@ function Subscription() {
                   normalizedTariff?.tariff_plan_id === plan.id &&
                   normalizedTariff?.tariff_plan_type === typePlan;
                 return (
-                  <Grid size={{ xl: 4, lg: 4, md: 12, xs: 12 }} key={plan.id}>
+                  <Grid
+                    size={{ xl: 4, lg: 4, md: 12, xs: 12, minHeight: "384px" }}
+                    key={plan.id}
+                  >
                     <Box className={style.subscriptionPage__plansItem}>
                       <Box className={style.subscriptionPage__plansItem__title}>
-                        {plan.title}
+                        {isLoading ? (
+                          <Skeleton
+                            variant="rectangular"
+                            height={36}
+                            sx={{
+                              borderRadius: "8px",
+                              bgcolor: "#999",
+                              width: "100%",
+                            }}
+                          />
+                        ) : (
+                          plan.title
+                        )}
                       </Box>
                       <Box
                         className={style.subscriptionPage__plansItem__subtitle}
                       >
-                        {plan.description}
+                        {isLoading ? (
+                          <Skeleton
+                            variant="rectangular"
+                            height={72}
+                            sx={{
+                              borderRadius: "8px",
+                              bgcolor: "#999",
+                              width: "100%",
+                            }}
+                          />
+                        ) : (
+                          plan.description
+                        )}
                       </Box>
                       <Box className={style.subscriptionPage__plansItem__price}>
-                        $
-                        {plan.price}
-                        
-                        <span>{plan.type == 'monthly' ? '/month' : '/year'}</span>
+                        {isLoading ? (
+                          <Skeleton
+                            variant="rectangular"
+                            height={53}
+                            sx={{
+                              borderRadius: "8px",
+                              bgcolor: "#999",
+                              width: "100%",
+                            }}
+                          />
+                        ) : (
+                          <>
+                            $ {plan.price}
+                            <span>
+                              {plan.type === "monthly" ? "/month" : "/year"}
+                            </span>
+                          </>
+                        )}
                       </Box>
 
-                      <Box className={style.subscriptionPage__plansItem__buttons}>
+                      <Box
+                        className={style.subscriptionPage__plansItem__buttons}
+                      >
                         {isLoading ? (
                           <Skeleton
                             variant="rectangular"
                             height={48}
-                            sx={{ borderRadius: "8px", bgcolor: "#999", width: "100%" }}
+                            sx={{
+                              borderRadius: "8px",
+                              bgcolor: "#999",
+                              width: "100%",
+                            }}
                           />
                         ) : hasActivePlan ? (
                           <button
@@ -200,26 +255,17 @@ function Subscription() {
                           </button>
                         ) : (
                           <>
-                            {
-                              plan.type == 'monthly'
-                              ? (
-                                <>
-                                  <button
-                                    type="button"
-                                    className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
-                                    onClick={() => openPayModal(plan, "freeTrial")}
-                                  >
-                                    Start Free Trial
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className={`${style.subscriptionPage__plansItem__button} btnRed small`}
-                                    onClick={() => openPayModal(plan, "buy")}
-                                  >
-                                    Choose Plan
-                                  </button>
-                                </>
-                              ) : (
+                            {plan.type == "monthly" ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
+                                  onClick={() =>
+                                    openPayModal(plan, "freeTrial")
+                                  }
+                                >
+                                  Start Free Trial
+                                </button>
                                 <button
                                   type="button"
                                   className={`${style.subscriptionPage__plansItem__button} btnRed small`}
@@ -227,15 +273,22 @@ function Subscription() {
                                 >
                                   Choose Plan
                                 </button>
-                              )
-                            }
-                            
+                              </>
+                            ) : (
+                              <button
+                                type="button"
+                                className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                                onClick={() => openPayModal(plan, "buy")}
+                              >
+                                Choose Plan
+                              </button>
+                            )}
                           </>
                         )}
                       </Box>
                     </Box>
                   </Grid>
-                )
+                );
               })}
             </Grid>
           </Box>
@@ -277,13 +330,18 @@ function Subscription() {
       >
         <Box
           className="modal-block"
-          sx={{p: 4}}
+          sx={{
+            width: "90%",
+            maxWidth: "530px",
+            minWidth: "auto",
+            maxHeight: "90vh",
+            overflowY: "auto",
+            padding: { xs: "20px", md: "40px" },
+          }}
         >
-          {isAuthenticated 
-          ?
-            <Box component="form"
-            onSubmit={handleSubmit(onSubmit)}>
-              <Box component="h2" sx={{ textAlign: "center", mb: "20px" }}>
+          {isAuthenticated ? (
+            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+              <Box component="h2" sx={{ textAlign: "center", mb: "20px", mt: '0' }}>
                 Payment
               </Box>
               <Box sx={{ mb: "20px", fontSize: "18px", fontWeight: "500" }}>
@@ -296,19 +354,57 @@ function Subscription() {
                   : `$ ${selectedPlan.price}/year`}
               </Box>
               <Box sx={{ mt: "20px" }}>
-                <Button fullWidth type="submit" className="btnRed">
+                <Button
+                  fullWidth
+                  type="submit"
+                  className="btnRed"
+                  sx={{
+                    bgcolor: "#e50000",
+                    p: "10px",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    color: "#fff",
+                    "&.MuiLoadingButton-loading": {
+                      bgcolor: "#e50000",
+                    },
+                    "& .MuiCircularProgress-root": {
+                      width: "20px !important",
+                      height: "20px !important",
+                    },
+                    "& .MuiCircularProgress-svg": {
+                      // color: "#fff"
+                    },
+                  }}
+                >
                   Buy
                 </Button>
               </Box>
             </Box>
-            : <Box>
-                <Box sx={{mb: 4, textAlign: 'center'}} component="h3">To purchase a subscription plan, you need to log in or sign up.</Box>
-                <Box>Please <Box sx={{ fontWeight: 'bold', display: 'inline-block', cursor: "pointer" }} onClick={handleOpenLogInModal}>Log In</Box> to continue</Box>
+          ) : (
+            <Box>
+              <Box sx={{ mb: 4, textAlign: "center" }} component="h3">
+                To purchase a subscription plan, you need to log in or sign up.
               </Box>
-          }
+              <Box sx={{ textAlign: "center" }}>
+                Please
+                <Box
+                  sx={{
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    cursor: "pointer",
+                    color: "#e50000",
+                    mx: 2,
+                  }}
+                  onClick={handleOpenLogInModal}
+                >
+                  Log In
+                </Box>
+                to continue
+              </Box>
+            </Box>
+          )}
         </Box>
       </Modal>
-
     </Box>
   );
 }

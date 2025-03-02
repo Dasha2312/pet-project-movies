@@ -8,8 +8,12 @@ import useTarifPlan from '../../hooks/TarifPlan/useTarifPlan';
 import useUser from '../../hooks/Auth/useUser';
 import {useCurrentTariffPlan} from '../../hooks/TarifPlan/useGetTariffPlan';
 import useTariffPlans from '../../hooks/TarifPlan/useTariffPlans';
+import { useDispatch } from 'react-redux';
+import { openAuthModal } from '../../store/authModalSlice';
 
 function Subscription() {
+  const dispatch = useDispatch();
+
   const {currentUserData, isAuthenticated} = useUser();
   const userId = currentUserData?.id || null;
 
@@ -45,6 +49,11 @@ function Subscription() {
   }
 
   function handleCloseModal() {
+    setShowPayModal(false)
+  }
+
+  function handleOpenLogInModal() {
+    dispatch(openAuthModal())
     setShowPayModal(false)
   }
 

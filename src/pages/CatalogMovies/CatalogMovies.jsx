@@ -10,12 +10,9 @@ import Grid from '@mui/material/Grid2';
 
 
 import style from "./CatalogMovies.module.scss"
-import CatalogMedia from '../../components/CatalogMedia/CatalogMedia';
-import Sing_In_Up from '../../components/Sing_In_Up/Sing_In_Up';
 import MediaBlock from '../../components/MediaBlock/MediaBlock';
 import PaginationBlock from '../../UI/PaginationBlock/PaginationBlock';
 
-import { useContextProvider } from '../../context/useContext';
 import useAddToWatch from '../../hooks/useAddToWatch';
 import useGetWatchLater from '../../hooks/useGetWatchLater';
 import useUser from '../../hooks/Auth/useUser';
@@ -96,7 +93,6 @@ function CatalogMovies() {
 
         </Box>
 
-        <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
       </Container>
     </Box>
   );

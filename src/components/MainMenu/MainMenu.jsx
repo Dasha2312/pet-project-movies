@@ -18,12 +18,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import style from './MainMenu.module.scss'
 import SearchBlock from '../SearchBlock/SearchBlock';
-import Sing_In_Up from '../Sing_In_Up/Sing_In_Up';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
 import useUser from '../../hooks/Auth/useUser';
 import useLogOut from '../../hooks/Auth/useLogOut';
+import { openAuthModal } from '../../store/authModalSlice';
 
 
 const pages = ['Home', 'Movies', 'Shows', 'Support', 'Subscriptions'];
@@ -36,7 +36,7 @@ function MainMenu({classBlock}) {
   const [anchorElNav, setAnchorElNav] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const [openLogIn, setOpenLogInModal] = useState(false)
+  
 
   const {currentUserData, isAuthenticated} = useUser();
 
@@ -77,9 +77,7 @@ function MainMenu({classBlock}) {
     setSearchShow(true);
   }
 
-  function handleOpenLogInModal() {
-    setOpenLogInModal(true)
-  }
+
 
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
@@ -207,13 +205,11 @@ function MainMenu({classBlock}) {
                     </Menu>
                   </>
                 ) : (
-                  <IconButton onClick={handleOpenLogInModal} sx={{ p: 0 }}>
+                  <IconButton onClick={() => dispatch(openAuthModal())} sx={{ p: 0 }}>
                     <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
                   </IconButton>
                 )
               }
-              
-              <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
              
             </Box>
           </Box>

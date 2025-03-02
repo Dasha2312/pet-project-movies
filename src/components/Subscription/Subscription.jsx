@@ -13,7 +13,6 @@ function Subscription() {
   const {currentUserData, isAuthenticated} = useUser();
   const userId = currentUserData?.id || null;
 
-
   const {currentTariffPlan, currentTariffPlanIsPending} = useCurrentTariffPlan(userId);
 
   function normalizeTariff(tariff) {
@@ -50,6 +49,7 @@ function Subscription() {
   }
 
   function onSubmit() {
+    console.log('selectPlan', selectedPlan)
     const userPlan = {
       tariffPlanTitle: selectedPlan.title,
       tariffPlanPrice: selectedPlan.price,
@@ -88,8 +88,6 @@ function Subscription() {
     const timeDifference = finishDate - currentDate;
     setDaysLeft(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
   }, [normalizedTariff?.finish_at])
-
-
 
   const tariffPlan = typePlan == 'monthly' ? plansMonth : plansYear;
   const isLoading = (userId && currentTariffPlanIsPending) || allTariffPlansPending;
@@ -193,20 +191,36 @@ function Subscription() {
                           </button>
                         ) : (
                           <>
-                            <button
-                              type="button"
-                              className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
-                              onClick={() => openPayModal(plan, "freeTrial")}
-                            >
-                              Start Free Trial
-                            </button>
-                            <button
-                              type="button"
-                              className={`${style.subscriptionPage__plansItem__button} btnRed small`}
-                              onClick={() => openPayModal(plan, "buy")}
-                            >
-                              Choose Plan
-                            </button>
+                            {
+                              plan.type == 'monthly'
+                              ? (
+                                <>
+                                  <button
+                                    type="button"
+                                    className={`${style.subscriptionPage__plansItem__button} btnBlack small`}
+                                    onClick={() => openPayModal(plan, "freeTrial")}
+                                  >
+                                    Start Free Trial
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                                    onClick={() => openPayModal(plan, "buy")}
+                                  >
+                                    Choose Plan
+                                  </button>
+                                </>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className={`${style.subscriptionPage__plansItem__button} btnRed small`}
+                                  onClick={() => openPayModal(plan, "buy")}
+                                >
+                                  Choose Plan
+                                </button>
+                              )
+                            }
+                            
                           </>
                         )}
                       </Box>
@@ -254,28 +268,38 @@ function Subscription() {
       >
         <Box
           className="modal-block"
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
+          sx={{p: 4}}
         >
-          <Box component="h2" sx={{ textAlign: "center", mb: "20px" }}>
-            Payment
-          </Box>
-          <Box sx={{ mb: "20px", fontSize: "18px", fontWeight: "500" }}>
-            <Box sx={{ fontWeight: "bold", display: "inline-block" }}>
-              {selectedPlan.title}
-            </Box>{" "}
-            -{" "}
-            {typePlan == "monthly"
-              ? `$ ${selectedPlan.price}/month`
-              : `$ ${selectedPlan.price}/year`}
-          </Box>
-          <Box sx={{ mt: "20px" }}>
-            <Button fullWidth type="submit" className="btnRed">
-              Buy
-            </Button>
-          </Box>
+          {isAuthenticated 
+          ?
+            <Box component="form"
+            onSubmit={handleSubmit(onSubmit)}>
+              <Box component="h2" sx={{ textAlign: "center", mb: "20px" }}>
+                Payment
+              </Box>
+              <Box sx={{ mb: "20px", fontSize: "18px", fontWeight: "500" }}>
+                <Box sx={{ fontWeight: "bold", display: "inline-block" }}>
+                  {selectedPlan.title}
+                </Box>{" "}
+                -{" "}
+                {typePlan == "monthly"
+                  ? `$ ${selectedPlan.price}/month`
+                  : `$ ${selectedPlan.price}/year`}
+              </Box>
+              <Box sx={{ mt: "20px" }}>
+                <Button fullWidth type="submit" className="btnRed">
+                  Buy
+                </Button>
+              </Box>
+            </Box>
+            : <Box>
+                <Box sx={{mb: 4, textAlign: 'center'}} component="h3">To purchase a subscription plan, you need to log in or sign up.</Box>
+                <Box>Please <Box sx={{ fontWeight: 'bold', display: 'inline-block', cursor: "pointer" }} onClick={handleOpenLogInModal}>Log In</Box> to continue</Box>
+              </Box>
+          }
         </Box>
       </Modal>
+
     </Box>
   );
 }

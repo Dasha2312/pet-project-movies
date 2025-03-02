@@ -3,14 +3,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSingUp } from '../../hooks/Auth/useSingUp';
 import { LoadingButton } from '@mui/lab';
 
-function SingUpForm({openModalSingUp, closeSingUpModal, setOpenLogInModal, setOpenModalSingUp}) {
+function SingUpForm({isSignUpOpen, closeSingUpModal, handleCloseModal}) {
   const {singup, isPending} = useSingUp();
+
   const {handleSubmit, formState: { errors }, reset, control} = useForm()
 
-  function handleLogInModal() {
-    setOpenLogInModal(true);
-    setOpenModalSingUp(false)
-  }
 
   function onSubmit({fullName, email, password}) {
     singup(
@@ -18,7 +15,7 @@ function SingUpForm({openModalSingUp, closeSingUpModal, setOpenLogInModal, setOp
       {
         onSettled: () => {
           reset();
-          setOpenModalSingUp(false);
+          closeSingUpModal
         },
       }
     )
@@ -26,7 +23,7 @@ function SingUpForm({openModalSingUp, closeSingUpModal, setOpenLogInModal, setOp
 
   return (
     <Modal
-      open={openModalSingUp}
+      open={isSignUpOpen}
       onClose={closeSingUpModal}
       sx={{
         ".MuiBackdrop-root": {
@@ -166,7 +163,7 @@ function SingUpForm({openModalSingUp, closeSingUpModal, setOpenLogInModal, setOp
         <Box sx={{marginTop: "30px"}}>
           <Box sx={{textAlign: "center"}}>Already have an account?</Box>
           <Box sx={{marginTop: "10px"}}>
-            <button onClick={handleLogInModal} className="btnText text-align-center w-100">Log In</button>
+            <button onClick={handleCloseModal} className="btnText text-align-center w-100">Log In</button>
           </Box>
         </Box>
         

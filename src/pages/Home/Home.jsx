@@ -15,7 +15,6 @@ import FreeTrial from "../../components/FreeTrial/FreeTrial";
 import style from "./Home.module.scss"
 import { useState } from "react";
 import useMobileState from "../../hooks/useMobileState";
-import Sing_In_Up from "../../components/Sing_In_Up/Sing_In_Up";
 import useAddToWatch from "../../hooks/useAddToWatch";
 import useGetWatchLater from "../../hooks/useGetWatchLater";
 import useUser from "../../hooks/Auth/useUser";
@@ -119,7 +118,6 @@ function Home() {
         <FreeTrial />
       </Box>
 
-      <Sing_In_Up openLogIn={openLogIn} setOpenLogInModal={setOpenLogInModal} />
     </>
   );
 }

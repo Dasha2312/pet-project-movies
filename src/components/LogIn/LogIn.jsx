@@ -3,11 +3,15 @@ import { Controller, useForm } from "react-hook-form";
 import { useLogIn } from "../../hooks/Auth/useLogIn";
 
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useDispatch, useSelector } from "react-redux";
+import { closeAuthModal } from "../../store/authModalSlice";
 
 
-function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInModal}) {
+function LogIn({ setOpenModalSingUp}) {
   
   const {login, isPending} = useLogIn();
+  const dispatch = useDispatch();
+  const openLogIn = useSelector(state => state.authModal.isOpen);
 
   const {reset, handleSubmit, formState: {errors}, control} = useForm({
     defaultValues: {
@@ -18,7 +22,7 @@ function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInMod
 
   function handleSingUpModal() {
     setOpenModalSingUp(true);
-    setOpenLogInModal(false)
+    dispatch(closeAuthModal())
   }
 
   function onSubmit(data) {
@@ -28,7 +32,7 @@ function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInMod
         reset()
       },
       onSuccess:() => {
-        setOpenLogInModal(false)
+        dispatch(closeAuthModal())
         reset()
       }
     })
@@ -38,7 +42,7 @@ function LogIn({openLogIn, handleCloseModal, setOpenModalSingUp, setOpenLogInMod
   return (
     <Modal
       open={openLogIn}
-      onClose={handleCloseModal}
+      onClose={() => dispatch(closeAuthModal())}
       sx={{
         ".MuiBackdrop-root": {
           backgroundColor: "rgba(0, 0, 0, 0.85)"

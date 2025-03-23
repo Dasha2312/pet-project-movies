@@ -52,7 +52,7 @@ function CatalogMovies() {
   const [openLogIn, setOpenLogInModal] = useState(false);
   ;
 
-  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
+  const {pendingWatchLater, allWatchLater} = useGetWatchLater();
 
   const {addWatch, addWatchPending} = useAddToWatch();
 
@@ -74,7 +74,7 @@ function CatalogMovies() {
           <Grid container columnSpacing={2} rowSpacing={3}>
             {
               discoverMovie?.results.map(item => {
-                const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId == item.id)
+                const isAddedToWatchLater = allWatchLater?.some(watchLaterItem => watchLaterItem.movieId == item.id)
                 return (
                   <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
                     <MediaBlock imagePosterSizes={imagePosterSizes} 

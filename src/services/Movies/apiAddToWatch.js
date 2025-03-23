@@ -1,3 +1,4 @@
+import useUser from "../../hooks/Auth/useUser";
 import supabase from "../apiSupabase";
 
 export async function apiDeleteWatchLater(movieId) {
@@ -51,7 +52,6 @@ export  async function apiAddToWatch(newMovieLater) {
 
 
 export async function getAllWatchLater() {
-
   let { data: all_watch_later, error } = await supabase
     .from('watch_later')
     .select('*')

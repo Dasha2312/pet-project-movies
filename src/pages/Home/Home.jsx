@@ -25,7 +25,7 @@ function Home() {
   const {isPendingPopular, populatMoviesList, isErrorPopular,  errorPopular} = usePopularMovies();
   const {isPendingTopRated, topRatedMoviesList, isErrorTopRated, errorTopRated} = useTopRated();
 
-  const {allWatchLeter} = useGetWatchLater();
+  const {allWatchLater} = useGetWatchLater();
 
   //Series
   const {isPendingPopularSeries, popularSeriesList, isErrorPopularSeries, errorPopularSeries} = usePopularSeries();
@@ -79,7 +79,7 @@ function Home() {
             </Box>
 
             <Box className={style.homeBlock__section}>
-              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} allWatchLeter={allWatchLeter} />
+              <SliderMovies data={upcomingMovies} isPending={isPending} isError={isError} error={error} title="New Releases" type="newReleases" openLogInModal={openLogInModal} addToWatchLater={addToWatchLater} allWatchLater={allWatchLater} />
             </Box>
 
             <Box className={style.homeBlock__section}>

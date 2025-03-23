@@ -16,7 +16,8 @@ function useLogOut() {
 
       queryClient.setQueryData(["user"], null);
       queryClient.removeQueries({ queryKey: ['userTariffPlans']}, null);
-      queryClient.removeQueries({ queryKey: ['currentTariff']});
+      queryClient.removeQueries({ queryKey: ['currentTariff']}, null);
+      queryClient.removeQueries({ queryKey: ['getAllMoviesWatchLater']}, null);
 
       if (matchPath("/account/*", location.pathname)) {
         navigate('/home', {replace: true})

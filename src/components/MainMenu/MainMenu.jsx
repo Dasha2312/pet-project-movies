@@ -20,7 +20,7 @@ import style from './MainMenu.module.scss'
 import SearchBlock from '../SearchBlock/SearchBlock';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
+
 import useUser from '../../hooks/Auth/useUser';
 import useLogOut from '../../hooks/Auth/useLogOut';
 import { openAuthModal } from '../../store/authModalSlice';
@@ -36,8 +36,6 @@ function MainMenu({classBlock}) {
   const [anchorElNav, setAnchorElNav] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  
-
   const {currentUserData, isAuthenticated} = useUser();
 
   const countWatchLater = useSelector(state => state.countWatchLater.count)
@@ -52,7 +50,6 @@ function MainMenu({classBlock}) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(fetchWatchLaterMovies());
       setAnchorElUser(null);
     }
   }, [dispatch, isAuthenticated]);

@@ -11,7 +11,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import style from "./Slider.module.scss"
 import { useRef, useState } from "react";
 
-function SliderMovies({isPending, isError, data, error, classBlock, title, type, openLogInModal, addToWatchLater, allWatchLeter}) {
+function SliderMovies({isPending, isError, data, error, classBlock, title, type, openLogInModal, addToWatchLater, allWatchLater}) {
 
   const {configuration} = useConfiguration();
   const imagesBaseUrl = configuration?.imagesBaseUrl;
@@ -109,7 +109,7 @@ function SliderMovies({isPending, isError, data, error, classBlock, title, type,
             <Box className={`${classBlock ? classBlock : ''} ${style.sliderContainer} slider-container`}>
               <Slider ref={sliderRef} {...settings}>
                 {data?.results.map(slide => {
-                  const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => 
+                  const isAddedToWatchLater = allWatchLater?.some(watchLaterItem => 
                     Number(watchLaterItem.movieId) === Number(slide.id)
                   );
                   

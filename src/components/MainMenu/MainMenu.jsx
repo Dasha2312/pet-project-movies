@@ -20,7 +20,7 @@ import style from './MainMenu.module.scss'
 import SearchBlock from '../SearchBlock/SearchBlock';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchWatchLaterMovies } from '../../store/watchLaterSlice';
+
 import useUser from '../../hooks/Auth/useUser';
 import useLogOut from '../../hooks/Auth/useLogOut';
 import { openAuthModal } from '../../store/authModalSlice';
@@ -36,8 +36,6 @@ function MainMenu({classBlock}) {
   const [anchorElNav, setAnchorElNav] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  
-
   const {currentUserData, isAuthenticated} = useUser();
 
   const countWatchLater = useSelector(state => state.countWatchLater.count)
@@ -52,10 +50,9 @@ function MainMenu({classBlock}) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(fetchWatchLaterMovies());
       setAnchorElUser(null);
     }
-  }, [dispatch, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -76,8 +73,6 @@ function MainMenu({classBlock}) {
     event.stopPropagation();
     setSearchShow(true);
   }
-
-
 
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
@@ -205,7 +200,7 @@ function MainMenu({classBlock}) {
                     </Menu>
                   </>
                 ) : (
-                  <IconButton onClick={() => dispatch(openAuthModal())} sx={{ p: 0 }}>
+                  <IconButton onClick={() => dispatch(openAuthModal('LogIn'))} sx={{ p: 0 }}>
                     <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
                   </IconButton>
                 )

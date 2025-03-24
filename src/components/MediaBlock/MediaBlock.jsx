@@ -11,9 +11,10 @@ import { useDispatch } from 'react-redux';
 import { decrementCounter, incrementCounter } from '../../store/watchLaterSlice';
 import useUser from '../../hooks/Auth/useUser';
 import useRemoveWatchLater from '../../hooks/useRemoveWatchLater';
+import { openAuthModal } from '../../store/authModalSlice';
 
 
-function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModal, addToWatchLater, isAddedToWatchLater}) {
+function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, addToWatchLater, isAddedToWatchLater}) {
   const newFormatDate = changeDate(media.release_date);
 
   const { currentUserPending, isAuthenticated} = useUser();
@@ -42,7 +43,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
     }
 
     if (!isAuthenticated) {
-      openLogInModal();
+      dispatch(openAuthModal('LogIn'))
       return;
     }
 
@@ -61,7 +62,7 @@ function MediaBlock({media, imagePosterSizes, imagesBaseUrl, type, openLogInModa
       dispatch(incrementCounter())
     }
 
-  },[isAdded, isAuthenticated, currentUserPending, openLogInModal, addToWatchLater, removeWatchLater, dispatch])
+  },[isAdded, isAuthenticated, currentUserPending, addToWatchLater, removeWatchLater, dispatch])
 
   return (
     <Box className={style.mediaItem}>

@@ -47,18 +47,12 @@ function CatalogMovies() {
     } else {
       setCatalogTitle(`All Movies`);
     }
-  }, [genreMoviesListPending, genreId]);
-
-  const [openLogIn, setOpenLogInModal] = useState(false);
-  ;
+  }, [genreMoviesList, genreId, genreMoviesListPending]);
 
   const {pendingWatchLater, allWatchLater} = useGetWatchLater();
 
   const {addWatch, addWatchPending} = useAddToWatch();
 
-  function openLogInModal() {
-    setOpenLogInModal(true)
-  }
 
   function addToWatchLater(newMovieLater) {
     addWatch({...newMovieLater, userId: currentUserData.id})
@@ -80,7 +74,6 @@ function CatalogMovies() {
                     <MediaBlock imagePosterSizes={imagePosterSizes} 
                       imagesBaseUrl={imagesBaseUrl} 
                       media={item} 
-                      openLogInModal={openLogInModal} 
                       addToWatchLater={addToWatchLater} 
                       isAddedToWatchLater={isAddedToWatchLater} 
                     />

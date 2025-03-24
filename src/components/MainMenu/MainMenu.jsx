@@ -52,7 +52,7 @@ function MainMenu({classBlock}) {
     if (isAuthenticated) {
       setAnchorElUser(null);
     }
-  }, [dispatch, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -73,8 +73,6 @@ function MainMenu({classBlock}) {
     event.stopPropagation();
     setSearchShow(true);
   }
-
-
 
   return (
     <AppBar position="static" className={`${style.header__menu} ${classBlock}`}>
@@ -202,7 +200,7 @@ function MainMenu({classBlock}) {
                     </Menu>
                   </>
                 ) : (
-                  <IconButton onClick={() => dispatch(openAuthModal())} sx={{ p: 0 }}>
+                  <IconButton onClick={() => dispatch(openAuthModal('LogIn'))} sx={{ p: 0 }}>
                     <AccountCircleIcon sx={{fontSize: '35px', color: '#fff'}} />
                   </IconButton>
                 )

@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  isOpen: false
+  isOpen: false,
+  modalType: null
 }
 
 const authModalSlice = createSlice({
   name: 'authModalSlice',
   initialState,
   reducers: {
-    openAuthModal: (state) => {
-      state.isOpen = true
+    openAuthModal: (state, action) => {
+      console.log('asd', action.payload)
+      state.isOpen = true;
+      state.modalType = action.payload
     },
     closeAuthModal: (state) => {
       state.isOpen = false
+      state.modalType = null
     }
   }
 })

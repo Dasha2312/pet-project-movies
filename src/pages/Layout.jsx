@@ -2,10 +2,12 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../layout/Header/Header";
 import Footer from "../layout/Footer/Footer";
-import Sing_In_Up from "../components/Sing_In_Up/Sing_In_Up";
+import { useSelector } from "react-redux";
+import Modals from "../components/Modals/Modals";
 
 function Layout() {
   const location = useLocation();
+  const isModalOpen = useSelector(state => state.authModal.isOpen);
 
   const isHomePage = location.pathname == '/' || location.pathname == '/home';
   return (
@@ -15,7 +17,7 @@ function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <Sing_In_Up />
+      {isModalOpen && <Modals />}
     </>
   );
 }

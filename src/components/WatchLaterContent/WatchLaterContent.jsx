@@ -11,7 +11,7 @@ import useRemoveWatchLater from '../../hooks/useRemoveWatchLater';
 
 
 function WatchLaterContent() {
-  const {pendingWatchLater, allWatchLeter} = useGetWatchLater();
+  const {pendingWatchLater, allWatchLater} = useGetWatchLater();
   const {removeWatchLater} = useRemoveWatchLater()
 
   const {isPendingConfiguration, configuration, isErrorConfiguration, errorConfiguration} = useConfiguration();
@@ -23,7 +23,7 @@ function WatchLaterContent() {
     removeWatchLater(movieId)
   }
 
-  console.log('allWatchLeter', allWatchLeter)
+  console.log('allWatchLater', allWatchLater)
 
   if(pendingWatchLater) {
     return (
@@ -33,11 +33,11 @@ function WatchLaterContent() {
   return (
     <>
       {
-        allWatchLeter?.length > 0 ? (
+        allWatchLater?.length > 0 ? (
           <Grid container columnSpacing={2} rowSpacing={3}>
             {
-              allWatchLeter?.map(item => {
-                const isAddedToWatchLater = allWatchLeter?.some(watchLaterItem => watchLaterItem.movieId == item.movieId)
+              allWatchLater?.map(item => {
+                const isAddedToWatchLater = allWatchLater?.some(watchLaterItem => watchLaterItem.movieId == item.movieId)
                 return (
                   <Grid size={{ xs: 12, md: 6, xl: 3 }} key={item.id}>
                     <WatchLaterMediaBlock 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getGenreMovies(catalogPage = 1) {
+export async function getGenreMovies() {
   const myToken = import.meta.env.VITE_Access_Token_Auth;
   try {
     const options = {
@@ -10,7 +10,7 @@ export async function getGenreMovies(catalogPage = 1) {
       }
     }
 
-    const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?page=${catalogPage}`, options);
+    const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list`, options);
 
     const genreMovie = response.data.genres;
 

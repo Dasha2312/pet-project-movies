@@ -9,7 +9,6 @@ import useUser from "./Auth/useUser";
 function useGetWatchLater() {
   const dispatch = useDispatch();
   const {currentUserData} = useUser();
-  console.log('currentUserData')
 
   const {isPending: pendingWatchLater, data: allWatchLater} = useQuery({
     queryKey: ['getAllMoviesWatchLater'],

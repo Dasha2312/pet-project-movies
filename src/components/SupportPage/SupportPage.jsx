@@ -1,11 +1,12 @@
-import { Accordion, AccordionDetails, AccordionSummary, Alert, AlertTitle, Box, Button, Checkbox, Container, FormControlLabel, FormGroup, TextField } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 
 import style from "./SupportPage.module.scss"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AccordionBlock from "../../UI/AccordionBlock/AccordionBlock";
-import { Controller, useForm } from "react-hook-form";
+import FAQForm from "../FAQForm/FAQForm";
 import SupportForm from "../SupportForm/SupportForm";
+
 
 
 const dataFAQ = [
@@ -54,30 +55,6 @@ const dataFAQ = [
 function SupportPage() {
   const [expanded, setExpanded] = useState('');
   const [showAsk, setShowAsk] = useState(false);
-  const [isSuccessfullySubmittedSupport, setIsSuccessfullySubmittedSupport] = useState(false);
-  const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false);
-
-  const {handleSubmit, control, watch, formState, reset} = useForm({
-    defaultValues: {
-      firstName: '',
-      secondName: '',
-      email: '',
-      message: '',
-      file: '',
-      agreeCheck: false
-    }
-  })
-
-  const {handleSubmit: handleSubmitSupport, control: controlSupport, watch: watchSupport, formState: formStateSupport, reset: resetSupport} = useForm({
-    defaultValues: {
-      firstName: '',
-      secondName: '',
-      email: '',
-      subject: '',
-      message: '',
-      agreeCheck: false
-    }
-  })
 
   function handleChange(panel) {
     return function(event, newExpanded) {
@@ -85,42 +62,10 @@ function SupportPage() {
     };
   }
 
-  useEffect(() => {
-    if (formState.isSubmitted) {
-      setIsSuccessfullySubmitted(true); 
-    }
-
-  }, [formState.isSubmitted]);
-
-  function onSubmit(data) {
-    console.log('data form 1: ', data);
-    reset();
-    setTimeout(() => {
-      setIsSuccessfullySubmitted(false);
-    }, 3500);
-  }
-
-  useEffect(() => {
-    if (formStateSupport.isSubmitted) {
-      setIsSuccessfullySubmittedSupport(true);
-    }
-  }, [formStateSupport.isSubmitted]);
-
-  function supportOnSubmit(data) {
-    console.log('support form 2: ', data);
-    resetSupport();
-  
-    setTimeout(() => {
-      setIsSuccessfullySubmittedSupport(false);
-    }, 3500);
-  }
-
   function showSupportForm() {
     setShowAsk(prev => !prev)
   }
 
-  const agreeCheck = watch('agreeCheck')
-  console.log('isSuccessfullySubmitted', isSuccessfullySubmitted)
 
   return (
     <Box className={style.supportPage}>
@@ -140,139 +85,10 @@ function SupportPage() {
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, xl:7, lg: 7 }}>
               <Box className={style.supportPage__form}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Grid container spacing={2}>
-                    <Grid size={{ xs: 12, sm: 12, md: 12, xl:6, lg: 6 }}>
-                      <Box sx={{marginBottom: '20px', position: 'relative'}}>
-                        <Box className={style.supportPage__formLabel}>First Name</Box>
-                        <Controller
-                          name="firstName"
-                          rules={{
-                            required: 'This files is required',
-                            validate: value => value.trim() !== '' || 'Field cannot contain only spaces'
-                          }}
-                          control={control}
-                          render={({field, fieldState: {error}}) => {
-                            return (
-                              <>
-                                <input type="text" name="firstName" placeholder="Enter First Name" {...field} className={style.supportPage__formInput} />
-                                {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
-                              </>
-                            )
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 12, md: 12, xl:6, lg: 6 }}>
-                      <Box sx={{marginBottom: '20px', position: 'relative'}}>
-                        <Box className={style.supportPage__formLabel}>Second Name</Box>
-                        <Controller
-                          name="secondName"
-                          rules={{
-                            required: 'This files is required',
-                            validate: value => value.trim() !== '' || 'Field cannot contain only spaces'
-                          }}
-                          control={control}
-                          render={({field, fieldState: {error}}) => {
-                            return (
-                              <>
-                                <input type="text" name="secondName" placeholder="Enter Second Name" {...field} />
-                                {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
-                              </>
-                            )
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Box sx={{marginBottom: '20px', position: 'relative'}}>
-                    <Box className={style.supportPage__formLabel}>Email</Box>
-                    <Controller
-                      name="email"
-                      rules={{
-                        required: 'This files is required',
-                        validate: {
-                          notEmpty: value => value.trim() !== '' || 'Field cannot contain only spaces',
-                          validEmail: value => /\S+@\S+\.\S+/.test(value) || 'Please enter a valid email address'
-                        }
-                      }}
-                      control={control}
-                      render={({field, fieldState: {error}}) => {
-                        return (
-                          <>
-                            <input type="text" placeholder="Enter your Email" {...field} />
-                            {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
-                          </>
-                        )
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{marginBottom: '20px', position: 'relative'}}>
-                    <Box className={style.supportPage__formLabel}>Message</Box>
-                    <Controller
-                      name="message"
-                      rules={{
-                        required: 'This files is required',
-                        validate: value => value.trim() !== '' || 'Field cannot contain only spaces'
-                      }}
-                      control={control}
-                      render={({field, fieldState: {error}}) => {
-                        return (
-                          <>
-                            <textarea type="text" placeholder="Enter your Message" {...field} />
-                            {error && <Box className={`${style.supportPage__formError} form-error`}>{error.message}</Box>}
-                          </>
-                        )
-                      }}
-                    />
-                  </Box>
-                  <Box className={style.supportPage__formAgree} sx={{marginBottom: '20px', position: 'relative'}}>
-                    <Controller
-                      name="agreeCheck"
-                      rules={{required: 'This files is required'}}
-                      control={control}
-                      render={({field, fieldState: {error}}) => {
-                        const { onChange, value } = field
-                        return (
-                          <>
-                            <FormGroup>
-                              <FormControlLabel control={<Checkbox sx={{
-                                '& .MuiSvgIcon-root': {
-                                  border: '1px solid #fff',
-                                  borderRadius: '4px',
-                                },
-                                '&.Mui-checked': {
-                                  color: "#fff",
-                                  '.MuiSvgIcon-root': {
-                                    border: '0',
-                                  },
-                                },
-                              }} checked={value} onChange={onChange} />} 
-                              label="I agree with Terms of Use and Privacy Policy" 
-                              />
-                            </FormGroup>
-                            {error && <Box className={`${style.supportPage__formError} form-error`} sx={{bottom: '-15px'}}>{error.message}</Box>}
-                          </>
-                        )
-                      }}
-                    />
-                  </Box>
-                  <Box className={style.supportPage__formBottom}>
-                    
-                    <Box className={style.supportPage__formSend}>
-                      <button type="submit" className={`${style.supportPage__formBtn} btnRed btn-medium`} disabled={agreeCheck ? false : true}>Send Message</button>
-                    </Box>
-                  </Box>
-                </form>
+                <SupportForm />
               </Box>
             </Grid>
           </Grid>
-
-          {isSuccessfullySubmitted && <Alert severity="success" sx={{marginTop: '20px'}}>
-              <AlertTitle>Thank you!</AlertTitle>
-              Your request has been successfully submitted to our team.
-          </Alert>
-          }
         </Box>
 
         <Box className={style.supportPage__ask}>
@@ -289,7 +105,7 @@ function SupportPage() {
           </Box>
         </Box>
 
-        {showAsk && <SupportForm handleSubmitSupport={handleSubmitSupport} supportOnSubmit={supportOnSubmit} controlSupport={controlSupport} Controller={Controller} watchSupport={watchSupport} isSuccessfullySubmittedSupport={isSuccessfullySubmittedSupport} />}
+        {showAsk && <FAQForm />}
 
         <Box className={style.supportPage__faq}>
           <Grid container spacing={2}>
